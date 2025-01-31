@@ -7,7 +7,7 @@ import Map from "@/components/Left Sidebar/Map.vue";
 
 <template>
   <calcite-shell-panel slot="panel-start">
-    <calcite-panel heading="Map">
+    <calcite-panel heading="Map Panel:">
     <Map/>
     <MapControlBar slot="footer"/>
     </calcite-panel>

@@ -19,6 +19,7 @@
     "@arcgis/core": "^4.31.6",
     "@arcgis/map-components": "^4.31.6",
     "@esri/calcite-components": "^2.13.2",
+    "pinia": "^2.3.1",
     "vue": "^3.4.36"
   },
   "devDependencies": {
