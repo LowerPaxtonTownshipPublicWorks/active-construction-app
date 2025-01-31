@@ -1,24 +1,63 @@
 <script setup>
-import "@esri/calcite-components/dist/components/calcite-tile";
+import "@esri/calcite-components/dist/components/calcite-card";
+import "@esri/calcite-components/dist/components/calcite-button";
+import "@esri/calcite-components/dist/components/calcite-meter";
+import {computed} from "vue";
+import Heading from "@/components/Right Sidebar/Card/Heading.vue";
+import Description from "@/components/Right Sidebar/Card/Description.vue";
 
 const props = defineProps({
-  heading: String,
-  description: String,
+  schoolName: String,
+  schoolLocation: String,
+  website: String,
+  district: String,
+  studentCount: Number,
+})
+
+const checkWebsite = computed(() => {
+  return props.website !== "NOT AVAILABLE" && props.website !== "";
 })
 
 
 </script>
 
 <template>
-  <calcite-tile
-      :heading="props.heading"
-      :description="props.description"
-      icon="education"
-  >
-  </calcite-tile>
+  <calcite-card>
+    <Heading :district="props.district" />
+    <Description :school-location="props.schoolLocation" :school-name="props.schoolName" />
+    <div class="content-container">
+      <span class="detailsHeader">School Details:</span>
+      <div class="details-container">
+          <calcite-meter :value="props.studentCount" max="1000"></calcite-meter>
+          <calcite-meter></calcite-meter>
+      </div>
+    </div>
+    <div slot="footer-start">
+      <calcite-button v-if="checkWebsite" :href="props.website" target="_blank" round appearance="transparent" icon-start="web" >Website</calcite-button>
+      <calcite-button v-else disabled round kind="neutral" appearance="transparent" >No Website Found</calcite-button>
+    </div>
+    <div slot="footer-end">
+      <calcite-button  round appearance="outline" icon-start="phone">Call</calcite-button>
+      <calcite-button round icon-end="road-sign">Directions</calcite-button>
+    </div>
+
+  </calcite-card>
 </template>
 
 <style scoped>
+
+
+
+div.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+span.detailsHeader {
+  font-size: 0.875rem;
+}
 
 
 </style>

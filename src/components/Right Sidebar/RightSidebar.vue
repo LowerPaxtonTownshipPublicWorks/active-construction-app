@@ -14,7 +14,7 @@ const filteredSchoolsCount = ref(0)
 
 const filterSchools = computed(() => {
   if (inputText !== "") {
-    const filteredSchools = schoolsStore.schools.filter(school => school.NAME.includes(inputText.value.toUpperCase()));
+    const filteredSchools = schoolsStore.schools.filter(school => school.NAME.toUpperCase().includes(inputText.value.toUpperCase()));
     filteredSchoolsCount.value = filteredSchools.length;
     return filteredSchools
   } else {
@@ -44,8 +44,11 @@ const filterSchools = computed(() => {
         <SchoolCard
             v-for="(feature, index) in filterSchools"
             :key="index"
-            :heading="feature.NAME"
-            :description="feature.CITY + ', ' + feature.STATE"
+            :school-name="feature.NAME"
+            :school-location="feature.CITY + ', ' + feature.STATE + ' ' + feature.ZIP"
+            :website="feature.WEBSITE"
+            :district="feature.districtName"
+            :student-count="feature.ENROLLMENT"
         />
       </div>
     </calcite-panel>
@@ -54,6 +57,17 @@ const filterSchools = computed(() => {
 </template>
 
 <style scoped>
+
+calcite-card {
+  --calcite-card-shadow: 3px 2px 4px rgba(0, 0, 0, 0.12);
+  scale: 1;
+  transition: scale 0.5s ease-in-out;
+}
+
+calcite-card:hover {
+  scale: 1.05;
+  z-index: 10;
+}
 
 calcite-shell-panel {
   --calcite-shell-panel-min-width: 50vw;
@@ -65,7 +79,11 @@ calcite-input-text {
 
 #calcite-card-group {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 10px;
+  overflow-x: hidden;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 
 </style>
