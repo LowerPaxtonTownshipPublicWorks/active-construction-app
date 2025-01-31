@@ -10,10 +10,16 @@ import {computed, ref} from "vue";
 
 const schoolsStore = useSchoolsStore();
 const inputText = ref("")
+const filteredSchoolsCount = ref(0)
 
 const filterSchools = computed(() => {
   if (inputText !== "") {
-    return schoolsStore.schools.filter(school => school.NAME.includes(inputText.value.toUpperCase()));
+    const filteredSchools = schoolsStore.schools.filter(school => school.NAME.includes(inputText.value.toUpperCase()));
+    filteredSchoolsCount.value = filteredSchools.length;
+    return filteredSchools
+  } else {
+    filteredSchoolsCount.value = schoolsStore.length;
+    return schoolsStore.schools
   }
 })
 
@@ -24,23 +30,23 @@ const filterSchools = computed(() => {
 
   <calcite-shell-panel slot="panel-end">
     <calcite-panel
-        :heading="`Schools Panel Results (${schoolsStore.getSchoolsCount} Showing)`"
+        :heading="`Schools Panel Results (${filteredSchoolsCount} Showing)`"
     >
       <calcite-input-text
           placeholder="Find a school..."
           icon="search"
-          v-model="inputText"
+          v-model.trim="inputText"
       >
       </calcite-input-text>
       <div
           id="calcite-card-group"
       >
-      <SchoolCard
-          v-for="(feature, index) in filterSchools"
-          :key="index"
-          :heading="feature.NAME"
-          :description="feature.CITY + ', ' + feature.STATE"
-      />
+        <SchoolCard
+            v-for="(feature, index) in filterSchools"
+            :key="index"
+            :heading="feature.NAME"
+            :description="feature.CITY + ', ' + feature.STATE"
+        />
       </div>
     </calcite-panel>
   </calcite-shell-panel>

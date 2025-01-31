@@ -5,22 +5,24 @@ import {useSchoolsStore} from "@/stores/schools";
 
 const schoolsStore = useSchoolsStore();
 
-const getSchools = async ({ target}) => {
-  const mapView = await target.extent
-  const map = await target.map
-  const mapLayers = await map.layers
-  const schoolsFeatureLayer = await mapLayers.items[0]
+const fetchSchools = async ({target}) => {
+  const {extent, map} = target
+  const schoolsFeatureLayer = map.layers.items.find((layer) => layer.title === "Public Schools")
 
-  if(schoolsFeatureLayer) {
-  const query = await schoolsFeatureLayer.createQuery()
+  if (!schoolsFeatureLayer) return
+
+  const query = schoolsFeatureLayer.createQuery()
   query.where = '1=1'
-  query.geometry = mapView
-  schoolsFeatureLayer.queryFeatures(query).then(results => {
-  schoolsStore.clearSchoolsStore()
+  query.geometry = extent
+
+  try {
+    const results = await schoolsFeatureLayer.queryFeatures(query)
+    schoolsStore.clearSchoolsStore()
     for (let feature of results.features) {
       schoolsStore.addSchool(feature.attributes)
     }
-  })
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -29,7 +31,7 @@ const getSchools = async ({ target}) => {
 
 <template>
   <arcgis-map
-      @arcgisViewChange="getSchools"
+      @arcgisViewChange="fetchSchools"
       item-id="5010b78f7a8d46b0ab7b4c10b46bdc87"
 
   ></arcgis-map>

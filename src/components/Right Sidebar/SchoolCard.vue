@@ -10,12 +10,12 @@ const props = defineProps({
 </script>
 
 <template>
-<calcite-tile
-  :heading="props.heading"
-  :description="props.description"
-  icon="education"
->
-</calcite-tile>
+  <calcite-tile
+      :heading="props.heading"
+      :description="props.description"
+      icon="education"
+  >
+  </calcite-tile>
 </template>
 
 <style scoped>
