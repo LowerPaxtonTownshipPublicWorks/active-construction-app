@@ -5,6 +5,7 @@ import "@esri/calcite-components/dist/components/calcite-meter";
 import {computed} from "vue";
 import Heading from "@/components/Right Sidebar/Card/Heading.vue";
 import Description from "@/components/Right Sidebar/Card/Description.vue";
+import CardMeter from "@/components/Right Sidebar/Card/CardMeter.vue";
 
 const props = defineProps({
   schoolName: String,
@@ -12,6 +13,7 @@ const props = defineProps({
   website: String,
   district: String,
   studentCount: Number,
+  teacherCount: Number,
 })
 
 const checkWebsite = computed(() => {
@@ -26,11 +28,8 @@ const checkWebsite = computed(() => {
     <Heading :district="props.district" />
     <Description :school-location="props.schoolLocation" :school-name="props.schoolName" />
     <div class="content-container">
-      <span class="detailsHeader">School Details:</span>
-      <div class="details-container">
-          <calcite-meter :value="props.studentCount" max="1000"></calcite-meter>
-          <calcite-meter></calcite-meter>
-      </div>
+      <CardMeter label="Estimated Students:" max="1500" :count="studentCount" unit="Students" />
+      <CardMeter label="Estimated Teachers:" max="100" :count="teacherCount" unit="Teachers" />
     </div>
     <div slot="footer-start">
       <calcite-button v-if="checkWebsite" :href="props.website" target="_blank" round appearance="transparent" icon-start="web" >Website</calcite-button>

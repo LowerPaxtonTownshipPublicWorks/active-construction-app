@@ -49,6 +49,7 @@ const filterSchools = computed(() => {
             :website="feature.WEBSITE"
             :district="feature.districtName"
             :student-count="feature.ENROLLMENT"
+            :teacher-count="feature.FT_TEACHERS"
         />
       </div>
     </calcite-panel>
@@ -64,10 +65,6 @@ calcite-card {
   transition: scale 0.5s ease-in-out;
 }
 
-calcite-card:hover {
-  scale: 1.05;
-  z-index: 10;
-}
 
 calcite-shell-panel {
   --calcite-shell-panel-min-width: 50vw;
