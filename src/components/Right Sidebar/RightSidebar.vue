@@ -2,6 +2,7 @@
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-input-text";
+import "@esri/calcite-components/dist/components/calcite-loader";
 
 import SchoolCard from "@/components/Right Sidebar/SchoolCard.vue";
 
@@ -14,7 +15,11 @@ const filteredSchoolsCount = ref(0)
 
 const filterSchools = computed(() => {
   if (inputText !== "") {
-    const filteredSchools = schoolsStore.schools.filter(school => school.NAME.toUpperCase().includes(inputText.value.toUpperCase()));
+    const filteredSchools = schoolsStore.schools.filter(school =>
+        school.NAME.toUpperCase().includes(inputText.value.toUpperCase())
+        ||
+        school.districtName.toUpperCase().includes(inputText.value.toUpperCase())
+    );
     filteredSchoolsCount.value = filteredSchools.length;
     return filteredSchools
   } else {
@@ -38,6 +43,7 @@ const filterSchools = computed(() => {
           v-model.trim="inputText"
       >
       </calcite-input-text>
+      <calcite-loader v-if="schoolsStore.schools.length === 0"></calcite-loader>
       <div
           id="calcite-card-group"
       >
@@ -47,7 +53,11 @@ const filterSchools = computed(() => {
             :school-name="feature.NAME"
             :school-location="feature.CITY + ', ' + feature.STATE + ' ' + feature.ZIP"
             :website="feature.WEBSITE"
-            :district="feature.districtName"
+            :district-name="feature.districtName"
+            :district-school-count="feature.districtSchoolCount"
+            :district-student-count="feature.districtStudentCount"
+            :district-teacher-count="feature.districtTeacherCount"
+            :district-student-teacher-ratio="feature.districtStudentTeacherRatio"
             :student-count="feature.ENROLLMENT"
             :teacher-count="feature.FT_TEACHERS"
         />

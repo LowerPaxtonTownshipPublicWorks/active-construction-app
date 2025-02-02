@@ -6,17 +6,21 @@ import {useSchoolsStore} from "@/stores/schools";
 const schoolsStore = useSchoolsStore();
 
 const fetchSchools = async ({target}) => {
-  const {extent, map} = target
-  const schoolsFeatureLayer = map.layers.items.find((layer) => layer.title === "Public Schools")
+  const {extent, map} = await target
+  const schoolsFeatureLayer = await map.layers.items.find((layer) => layer.title === "Public Schools")
 
   if (!schoolsFeatureLayer) return
 
-  const query = schoolsFeatureLayer.createQuery()
-  query.where = '1=1'
-  query.geometry = extent
 
   try {
-    const results = await schoolsFeatureLayer.queryFeatures(query)
+    const results = await schoolsFeatureLayer.queryFeatures({
+      where: '1=1',
+      geometry: extent,
+      outFields:'*',
+      orderByFields: 'NAME ASC',
+      start: 0,
+      num: 25,
+    })
     schoolsStore.clearSchoolsStore()
     for (let feature of results.features) {
       schoolsStore.addSchool(feature.attributes)

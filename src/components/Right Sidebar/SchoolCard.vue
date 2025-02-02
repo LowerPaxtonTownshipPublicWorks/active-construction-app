@@ -11,7 +11,11 @@ const props = defineProps({
   schoolName: String,
   schoolLocation: String,
   website: String,
-  district: String,
+  districtName: String,
+  districtSchoolCount: Number,
+  districtStudentCount: Number,
+  districtTeacherCount: Number,
+  districtStudentTeacherRatio: String,
   studentCount: Number,
   teacherCount: Number,
 })
@@ -25,11 +29,17 @@ const checkWebsite = computed(() => {
 
 <template>
   <calcite-card>
-    <Heading :district="props.district" />
+    <Heading
+        :district-name="props.districtName"
+        :district-school-count="props.districtSchoolCount"
+        :district-student-count="props.districtStudentCount"
+        :district-teacher-count="props.districtTeacherCount"
+        :district-student-teacher-ratio="props.districtStudentTeacherRatio"
+    />
     <Description :school-location="props.schoolLocation" :school-name="props.schoolName" />
     <div class="content-container">
-      <CardMeter label="Estimated Students:" max="1500" :count="studentCount" unit="Students" />
-      <CardMeter label="Estimated Teachers:" max="100" :count="teacherCount" unit="Teachers" />
+      <CardMeter label="Estimated Students:" :max=1500 :count="studentCount" unit="Students" />
+      <CardMeter label="Estimated Teachers:" :max=100 :count="teacherCount" unit="Teachers" />
     </div>
     <div slot="footer-start">
       <calcite-button v-if="checkWebsite" :href="props.website" target="_blank" round appearance="transparent" icon-start="web" >Website</calcite-button>
