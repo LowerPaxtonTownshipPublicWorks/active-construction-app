@@ -48,8 +48,8 @@ const filterSchools = computed(() => {
           id="calcite-card-group"
       >
         <SchoolCard
-            v-for="(feature, index) in filterSchools"
-            :key="index"
+            v-for="feature in filterSchools"
+            :key="feature.OBJECTID"
             :school-name="feature.NAME"
             :school-location="feature.CITY + ', ' + feature.STATE + ' ' + feature.ZIP"
             :website="feature.WEBSITE"

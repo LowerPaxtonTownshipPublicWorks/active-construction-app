@@ -6,10 +6,10 @@ import Map from "@/components/Left Sidebar/Map.vue";
 </script>
 
 <template>
-  <calcite-shell-panel slot="panel-start">
+  <calcite-shell-panel slot="panel-end">
     <calcite-panel heading="Map Panel:">
     <Map/>
-    <MapControlBar slot="footer"/>
+<!--    <MapControlBar slot="footer"/>-->
     </calcite-panel>
   </calcite-shell-panel>
 </template>
