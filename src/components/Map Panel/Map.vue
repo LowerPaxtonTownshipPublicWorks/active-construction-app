@@ -1,5 +1,7 @@
 <script setup>
 import "@arcgis/map-components/dist/components/arcgis-map";
+import "@arcgis/map-components/dist/components/arcgis-legend";
+import "@arcgis/map-components/dist/components/arcgis-editor";
 
 import {useSchoolsStore} from "@/stores/schools";
 
@@ -37,8 +39,11 @@ const fetchSchools = async ({target}) => {
   <arcgis-map
       @arcgisViewChange="fetchSchools"
       item-id="5010b78f7a8d46b0ab7b4c10b46bdc87"
-
-  ></arcgis-map>
+      id="map"
+  >
+    <arcgis-editor position="top-left" allowed-workflows="update" />
+    <arcgis-legend position="bottom-left" />
+  </arcgis-map>
 </template>
 
 <style scoped>

@@ -1,17 +1,20 @@
 <script setup>
 import "@esri/calcite-components/dist/components/calcite-shell";
 
-import LeftSidebar from "@/components/Left Sidebar/LeftSidebar.vue";
-import RightSidebar from "@/components/Right Sidebar/RightSidebar.vue";
-import NavigationBar from "@/components/NavigationBar.vue";
+import CardPanel from "@/components/Card Panel/CardPanel.vue";
+import MapPanel from "@/components/Map Panel/MapPanel.vue";
+import Navbar from "@/components/Navigation/Navbar.vue";
+import EditPanel from "@/components/Edit Panel/EditPanel.vue";
+
 
 </script>
 
 <template>
   <calcite-shell>
-    <NavigationBar/>
-    <LeftSidebar/>
-    <RightSidebar/>
+    <Navbar/>
+    <EditPanel/>
+    <MapPanel/>
+    <CardPanel/>
   </calcite-shell>
 
 </template>

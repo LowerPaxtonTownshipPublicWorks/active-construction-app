@@ -1,11 +1,12 @@
 <script setup>
 import "@esri/calcite-components/dist/components/calcite-card";
 import "@esri/calcite-components/dist/components/calcite-button";
-import "@esri/calcite-components/dist/components/calcite-meter";
+
 import {computed} from "vue";
-import Heading from "@/components/Right Sidebar/Card/Heading.vue";
-import Description from "@/components/Right Sidebar/Card/Description.vue";
-import CardMeter from "@/components/Right Sidebar/Card/CardMeter.vue";
+
+import CardHeading from "@/components/Card Panel/CardHeading.vue";
+import CardDescription from "@/components/Card Panel/CardDescription.vue";
+import CardMeter from "@/components/Card Panel/CardMeter.vue";
 
 const props = defineProps({
   schoolName: String,
@@ -29,14 +30,14 @@ const checkWebsite = computed(() => {
 
 <template>
   <calcite-card>
-    <Heading
+    <CardHeading
         :district-name="props.districtName"
         :district-school-count="props.districtSchoolCount"
         :district-student-count="props.districtStudentCount"
         :district-teacher-count="props.districtTeacherCount"
         :district-student-teacher-ratio="props.districtStudentTeacherRatio"
     />
-    <Description :school-location="props.schoolLocation" :school-name="props.schoolName" />
+    <CardDescription :school-location="props.schoolLocation" :school-name="props.schoolName" />
     <div class="content-container">
       <CardMeter label="Estimated Students:" :max=1500 :count="studentCount" unit="Students" />
       <CardMeter label="Estimated Teachers:" :max=100 :count="teacherCount" unit="Teachers" />

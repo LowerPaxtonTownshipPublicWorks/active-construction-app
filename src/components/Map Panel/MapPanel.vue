@@ -1,22 +1,23 @@
 <script setup>
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-panel";
-import MapControlBar from "@/components/Left Sidebar/MapControlBar.vue";
-import Map from "@/components/Left Sidebar/Map.vue";
+import Map from "@/components/Map Panel/Map.vue";
 </script>
 
 <template>
-  <calcite-shell-panel slot="panel-end">
     <calcite-panel heading="Map Panel:">
     <Map/>
-<!--    <MapControlBar slot="footer"/>-->
     </calcite-panel>
-  </calcite-shell-panel>
 </template>
 
 <style scoped>
+
 calcite-shell-panel {
-  --calcite-shell-panel-min-width: 50vw;
+  flex-grow: 1;
+}
+
+calcite-panel {
+  width: 100%;
 }
 
 </style>
