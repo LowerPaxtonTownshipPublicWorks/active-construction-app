@@ -35,7 +35,7 @@ const checkWebsite = computed(() => {
         :district-school-count="props.districtSchoolCount"
         :district-student-count="props.districtStudentCount"
         :district-teacher-count="props.districtTeacherCount"
-        :district-student-teacher-ratio="props.districtStudentTeacherRatio"
+        :district-student-teacher-ratio="props.districtStudentTeacherRatio.toString()"
     />
     <CardDescription :school-location="props.schoolLocation" :school-name="props.schoolName" />
     <div class="content-container">

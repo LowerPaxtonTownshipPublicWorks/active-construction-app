@@ -12,7 +12,7 @@ import EditPanel from "@/components/Edit Panel/EditPanel.vue";
 <template>
   <calcite-shell>
     <Navbar/>
-    <EditPanel/>
+<!--    <EditPanel/>-->
     <MapPanel/>
     <CardPanel/>
   </calcite-shell>

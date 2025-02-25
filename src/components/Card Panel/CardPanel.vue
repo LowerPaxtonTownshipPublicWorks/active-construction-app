@@ -57,7 +57,7 @@ const filterSchools = computed(() => {
             :district-school-count="feature.districtSchoolCount"
             :district-student-count="feature.districtStudentCount"
             :district-teacher-count="feature.districtTeacherCount"
-            :district-student-teacher-ratio="feature.districtStudentTeacherRatio"
+            :district-student-teacher-ratio="feature.districtStudentTeacherRatio.toString()"
             :student-count="feature.ENROLLMENT"
             :teacher-count="feature.FT_TEACHERS"
         />
@@ -70,7 +70,7 @@ const filterSchools = computed(() => {
 <style scoped>
 
 calcite-shell-panel {
-  --calcite-shell-panel-min-width: 30vw
+  --calcite-shell-panel-min-width: 50vw
 }
 
 calcite-card {

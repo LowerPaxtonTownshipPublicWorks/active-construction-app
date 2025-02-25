@@ -41,7 +41,7 @@ const fetchSchools = async ({target}) => {
       item-id="5010b78f7a8d46b0ab7b4c10b46bdc87"
       id="map"
   >
-    <arcgis-editor position="top-left" allowed-workflows="update" />
+<!--    <arcgis-editor position="top-left" allowed-workflows="update" />-->
     <arcgis-legend position="bottom-left" />
   </arcgis-map>
 </template>
