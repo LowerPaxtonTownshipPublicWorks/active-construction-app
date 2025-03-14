@@ -9,7 +9,7 @@ export const useDetoursStore = defineStore('detours', () => {
     async function fetchDetours() {
         try {
             isDetoursLoading.value = true
-            const res = await fetch('https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/0/query?where=1%3D1&outFields=*&f=pjson')
+            const res = await fetch("https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/0/query?where=startDate%20%3C%3D%20CURRENT_DATE%20AND%20endDate%20%3E%3D%20CURRENT_DATE%20AND%20detourTYPE%20%3D%20'Work%20Area'&outFields=%2A&f=pjson")
             const data = await res.json()
            return detours.value = await data.features
         }

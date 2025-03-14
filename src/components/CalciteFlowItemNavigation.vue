@@ -27,6 +27,10 @@ calcite-icon[icon="exclamation-mark-triangle"] {
   --calcite-icon-color: var(--brand-yellow)
 }
 
+calcite-action {
+  --calcite-color-focus: var(--brand-yellow);
+}
+
 #main-flow-header-wrapper {
   display: flex;
   gap: 1.125rem;
