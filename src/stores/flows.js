@@ -1,28 +1,27 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useFlowsStore = defineStore('flows', () => {
+export const useFlowsStore = defineStore("flows", () => {
+  const projectFlows = ref([]);
+  const isHomeFlowSelected = ref(true);
 
-    const projectFlows = ref([])
-    const isHomeFlowSelected = ref(true)
+  function createFlowItem(project) {
+    const flowItem = {
+      ...project,
+    };
+    isHomeFlowSelected.value = false;
+    projectFlows.value.push(flowItem);
+  }
 
-    function createFlowItem(project) {
-        const flowItem = {
-          ...project
-        }
-        isHomeFlowSelected.value = false
-        projectFlows.value.push(flowItem)
-      }
+  function clearFlowItems() {
+    projectFlows.value = [];
+    isHomeFlowSelected.value = true;
+  }
 
-      function clearFlowItems() {
-        projectFlows.value = []
-        isHomeFlowSelected.value = true
-      }
-
-    return {
-        projectFlows,
-        isHomeFlowSelected,
-        createFlowItem,
-        clearFlowItems
-    }
-})
+  return {
+    projectFlows,
+    isHomeFlowSelected,
+    createFlowItem,
+    clearFlowItems,
+  };
+});
