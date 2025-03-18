@@ -1,4 +1,4 @@
-# Vue and ArcGIS Maps JS SDK Core & Map Components + Calcite Components
+# Vue and ArcGIS Maps JS SDK Core & Map Components + Calcite Components Template
 
 To install dependencies and start the development server, run:
 
@@ -6,16 +6,6 @@ To install dependencies and start the development server, run:
 npm install
 npm run dev
 ```
-
-### Copy the assets
-
-Static assets must be copied over to the public folder manually. A `copy` script has been created to make this process easier:
-
-```sh
-npm run copy
-```
-
-This will copy the assets required by the components to your project's `public/assets` directory.
 
 ## Recommended IDE setup
 
