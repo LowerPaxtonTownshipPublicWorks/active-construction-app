@@ -47,6 +47,7 @@ calcite-panel {
 
   & arcgis-map {
     height: 100%;
+    --calcite-color-brand: var(--brand-yellow);
   }
 }
 </style>

@@ -19,6 +19,7 @@ import CalciteProjectsTab from '@/components/CalciteProjectsTab.vue'
 import CalciteDetoursTab from '@/components/CalciteDetoursTab.vue'
 import ProjectMap from "./components/ProjectMap.vue";
 import ProjectText from "./components/ProjectText.vue";
+import CalciteFlowItemFooter from "./components/CalciteFlowItemFooter.vue";
 
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-tabs";
@@ -51,6 +52,7 @@ onMounted(async () => {
           <CalciteProjectsTab />
           <CalciteDetoursTab />
         </calcite-tabs>
+        <CalciteFlowItemFooter/>
       </calcite-flow-item>
       <calcite-flow-item v-for="flow in projectFlows" selected :heading=flow.attributes.projectName
         :description=flow.attributes.projectAbstract @calciteFlowItemBack="clearFlowItems">
@@ -63,10 +65,7 @@ onMounted(async () => {
   </calcite-shell>
 </template>
 
-<style>
-:root {
-  --brand-yellow: #ffc900;
-}
+<style scoped>
 
 calcite-tabs {
   --calcite-color-brand: var(--brand-yellow);
