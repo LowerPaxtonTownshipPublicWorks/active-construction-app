@@ -12,8 +12,8 @@ const projectsStore = useProjectsStore();
 const { projects, isProjectsLoading, getProjectsCount } =
   storeToRefs(projectsStore);
 
-import { useFlowsStore } from "@/stores/flows";
-const { createFlowItem } = useFlowsStore();
+import { useApplicationStore } from "@/stores/application";
+const { createFlowItem } = useApplicationStore();
 </script>
 
 <template>

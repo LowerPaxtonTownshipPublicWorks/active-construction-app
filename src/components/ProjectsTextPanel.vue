@@ -8,10 +8,10 @@ import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 
 
-import { useFlowsStore } from "@/stores/flows";
+import { useApplicationStore } from "@/stores/application";
 import { onMounted } from "vue";
-const flowsStore = useFlowsStore();
-const { projectFlows } = storeToRefs(flowsStore);
+const applicationStore = useApplicationStore();
+const { projectFlows } = storeToRefs(applicationStore);
 
 function formatDate(attributeDate) {
     const date = new Date(attributeDate)
@@ -61,13 +61,13 @@ function formatProjectTimeline(startDate, endDate) {
     flex-direction: column;
 
     & calcite-block {
-        --calcite-color-focus: var(--brand-yellow);
+        --calcite-color-focus: var(--calcite-color-status-warning);
     }
 
     & calcite-block[icon-start="exclamation-mark-triangle"] {
-        --calcite-block-text-color: var(--brand-yellow);
-        --calcite-block-heading-text-color: var(--brand-yellow);
-        --calcite-block-heading-text-color-press: var(--brand-yellow);
+        --calcite-block-text-color: var(--calcite-color-status-warning);
+        --calcite-block-heading-text-color: var(--calcite-color-status-warning);
+        --calcite-block-heading-text-color-press: var(--calcite-color-status-warning);
     }
 }
 </style>

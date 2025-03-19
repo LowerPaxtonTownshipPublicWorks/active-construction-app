@@ -25,7 +25,7 @@
     }
 
     & p:nth-child(1) {
-        color: white;
+        color: var(--calcite-color-text-1);
         font-size: 1rem;
         font-weight: 500;
     }

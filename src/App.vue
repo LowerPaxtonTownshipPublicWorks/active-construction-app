@@ -6,31 +6,32 @@ import { useProjectsStore } from "@/stores/projects";
 const { fetchProjects } = useProjectsStore();
 
 import { useDetoursStore } from "@/stores/detours";
-const { fetchDetours, fetchUpcomingDetours } = useDetoursStore();
+const { fetchActiveDetours, fetchUpcomingDetours } = useDetoursStore();
 
-import { useFlowsStore } from "@/stores/flows";
-const flowsStore = useFlowsStore();
-const { projectFlows, isHomeFlowSelected } = storeToRefs(flowsStore);
-const { clearFlowItems } = flowsStore;
+import { useApplicationStore } from "@/stores/application";
+const applicationStore = useApplicationStore();
+const { projectFlows, isHomeFlowSelected, theme } = storeToRefs(applicationStore);
+const { clearFlowItems } = applicationStore;
 
-import CalciteTabNavigation from '@/components/CalciteTabNavigation.vue'
-import CalciteFlowItemNavigation from '@/components/CalciteFlowItemNavigation.vue'
-import CalciteProjectsTab from '@/components/CalciteProjectsTab.vue'
-import CalciteDetoursTab from '@/components/CalciteDetoursTab.vue'
-import ProjectMap from "./components/ProjectMap.vue";
-import ProjectText from "./components/ProjectText.vue";
-import CalciteFlowItemFooter from "./components/CalciteFlowItemFooter.vue";
+import TabNavigation from '@/components/TabNavigation.vue'
+import FlowNavigation from '@/components/FlowNavigation.vue'
+import ProjectsTab from '@/components/ProjectsTab.vue'
+import DetoursTab from '@/components/DetoursTab.vue'
+import ProjectsMap from "./components/ProjectsMap.vue";
+import ProjectsTextPanel from "./components/ProjectsTextPanel.vue";
+import FlowFooter from "./components/FlowFooter.vue";
 
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import "@esri/calcite-components/dist/components/calcite-flow";
 import "@esri/calcite-components/dist/components/calcite-flow-item";
 
+
 onMounted(async () => {
   try {
     await fetchProjects();
     await fetchUpcomingDetours()
-    await fetchDetours();
+    await fetchActiveDetours();
   } catch (error) {
     return console.error(error);
   }
@@ -39,24 +40,24 @@ onMounted(async () => {
 </script>
 
 <template>
-  <calcite-shell class="calcite-mode-dark">
+  <calcite-shell :class="theme == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
     <calcite-flow>
       <calcite-flow-item :selected="isHomeFlowSelected">
-        <CalciteFlowItemNavigation />
+        <FlowNavigation />
         <calcite-tabs layout="center">
-          <CalciteTabNavigation />
-          <CalciteProjectsTab />
-          <CalciteDetoursTab />
+          <TabNavigation />
+          <ProjectsTab />
+          <DetoursTab />
         </calcite-tabs>
-        <CalciteFlowItemFooter />
+        <FlowFooter />
       </calcite-flow-item>
       <calcite-flow-item v-for="flow in projectFlows" selected
         :heading="flow.attributes.projectName || flow.attributes.detourName"
         :description="flow.attributes.projectAbstract || 'Detour Flow Subtitle Placeholder'"
         @calciteFlowItemBack="clearFlowItems">
         <div class="flowContentWrapper">
-          <ProjectMap></ProjectMap>
-          <ProjectText></ProjectText>
+          <ProjectsMap />
+          <ProjectsTextPanel />
         </div>
       </calcite-flow-item>
     </calcite-flow>
@@ -65,8 +66,8 @@ onMounted(async () => {
 
 <style scoped>
 calcite-tabs {
-  --calcite-color-brand: var(--brand-yellow);
-  --calcite-color-focus: var(--brand-yellow);
+  --calcite-color-brand: var(--calcite-color-status-warning);
+  --calcite-color-focus: var(--calcite-color-status-warning);
 }
 
 .flowContentWrapper {

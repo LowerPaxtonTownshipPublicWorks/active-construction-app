@@ -8,9 +8,9 @@ import "@esri/calcite-components/dist/components/calcite-loader";
 import "@arcgis/core/geometry/Polygon";
 import Polygon from "@arcgis/core/geometry/Polygon";
 
-import { useFlowsStore } from "@/stores/flows";
-const flowsStore = useFlowsStore();
-const { projectFlows } = storeToRefs(flowsStore);
+import { useApplicationStore } from "@/stores/application";
+const applicationStore = useApplicationStore();
+const { projectFlows } = storeToRefs(applicationStore);
 
 const mapView = ref(null);
 const isMapLoading = ref(true);
@@ -42,12 +42,12 @@ function zoomToProject() {
 calcite-panel {
     height: 35%;
 
-  --calcite-loader-progress-color: var(--brand-yellow);
+  --calcite-loader-progress-color: var(--calcite-color-status-warning);
   --calcite-scrim-background: rgba(0, 0, 0, 0.1);
 
   & arcgis-map {
     height: 100%;
-    --calcite-color-brand: var(--brand-yellow);
+    --calcite-color-brand: var(--calcite-color-status-warning);
   }
 }
 </style>

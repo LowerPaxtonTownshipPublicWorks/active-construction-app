@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
 export const useDetoursStore = defineStore("detours", () => {
-  const detours = ref([]);
+  const detoursActive = ref([]);
   const detoursUpcoming = ref([]);
   const isDetoursLoading = ref(true);
 
-  async function fetchDetours() {
+  async function fetchActiveDetours() {
     try {
       isDetoursLoading.value = true;
       const query = encodeURIComponent("startDate <= CURRENT_DATE AND endDate >= CURRENT_DATE AND detourTYPE = 'Work Area'");
@@ -15,7 +15,7 @@ export const useDetoursStore = defineStore("detours", () => {
         `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/0/query?where=${query}&orderByFields=${orderByFields}&outFields=%2A&f=pjson`
       );
       const data = await res.json();
-      return (detours.value = await data.features);
+      return (detoursActive.value = await data.features);
     } catch (error) {
       return console.error("Error: ", error);
     } finally {
@@ -41,20 +41,16 @@ export const useDetoursStore = defineStore("detours", () => {
   }
 
   const getDetoursCount = computed(() => {
-    return detours.value.length + detoursUpcoming.value.length;
+    return detoursActive.value.length + detoursUpcoming.value.length;
   });
 
-  function clearDetours() {
-    detours.value = [];
-  }
 
   return {
-    detours,
+    detoursActive,
     detoursUpcoming,
     isDetoursLoading,
     getDetoursCount,
-    fetchDetours,
+    fetchActiveDetours,
     fetchUpcomingDetours,
-    clearDetours,
   };
 });

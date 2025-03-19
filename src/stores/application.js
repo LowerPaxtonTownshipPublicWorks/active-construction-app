@@ -1,9 +1,15 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useFlowsStore = defineStore("flows", () => {
+export const useApplicationStore = defineStore("application", () => {
+  const theme = ref('dark')
   const projectFlows = ref([]);
   const isHomeFlowSelected = ref(true);
+
+  function changeTheme(theme) {
+    if (theme == 'dark') { return this.theme = 'light'}
+    if (theme != 'dark') { return this.theme = 'dark'}
+  }
 
   function createFlowItem(project) {
     const flowItem = {
@@ -19,8 +25,10 @@ export const useFlowsStore = defineStore("flows", () => {
   }
 
   return {
+    theme,
     projectFlows,
     isHomeFlowSelected,
+    changeTheme,
     createFlowItem,
     clearFlowItems,
   };

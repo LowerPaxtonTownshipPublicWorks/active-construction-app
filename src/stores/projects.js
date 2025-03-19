@@ -27,15 +27,11 @@ export const useProjectsStore = defineStore("projects", () => {
     return projects.value.length;
   });
 
-  function clearProjects() {
-    projects.value = [];
-  }
 
   return {
     projects,
     isProjectsLoading,
     getProjectsCount,
     fetchProjects,
-    clearProjects,
   };
 });
