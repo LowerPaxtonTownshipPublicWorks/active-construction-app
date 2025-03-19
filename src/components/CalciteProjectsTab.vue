@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 
 import "@esri/calcite-components/dist/components/calcite-list";
 import "@esri/calcite-components/dist/components/calcite-list-item";
+import "@esri/calcite-components/dist/components/calcite-list-item-group";
 import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-icon";
 
@@ -22,14 +23,14 @@ const { createFlowItem } = useFlowsStore();
       <p>Projects are sorted by start date (latest first).</p>
     </div> -->
     <calcite-list scale="m">
-      <calcite-list-item
+        <calcite-list-item
         v-for="(project, index) in projects"
         :key="index"
         :label="project.attributes.projectName"
         :description="project.attributes.projectAbstract"
         @calciteListItemSelect="createFlowItem(project)"
-      >
-      </calcite-list-item>
+        >
+      </calcite-list-item> 
     </calcite-list>
   </calcite-tab>
 </template>

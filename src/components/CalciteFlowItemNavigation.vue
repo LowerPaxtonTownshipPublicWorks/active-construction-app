@@ -9,18 +9,15 @@ import "@esri/calcite-components/dist/components/calcite-icon";
   <div slot="header-content" id="main-flow-header-wrapper">
     <calcite-icon scale="l" icon="exclamation-mark-triangle"></calcite-icon>
     <div id="main-flow-header-text-wrapper">
-      <p>Active Projects</p>
+      <p>Construction Projects</p>
       <p>Lower Paxton Township</p>
     </div>
   </div>
-  <calcite-action slot="header-actions-end" scale="l" icon="map"></calcite-action>
+  <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action>
 
 </template>
 
 <style>
-:root {
-  --brand-yellow: #ffaf00;
-}
 
 calcite-icon[icon="exclamation-mark-triangle"] {
   --calcite-icon-color: var(--brand-yellow)

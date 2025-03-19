@@ -24,27 +24,13 @@ function formatProjectTimeline(startDate, endDate) {
     return `${formatDate(startDate)} - TBD`;
 }
 
-
-function shareProject() {
-    const { attributes } = projectFlows.value[0]
-
-    const shareData = {
-        title: "MDN",
-        text: "Learn web development on MDN!",
-        url: "https://developer.mozilla.org",
-    }
-
-    navigator.share(shareData)
-}
-
-
 </script>
 <template>
 
     <div v-for="{ attributes } in projectFlows" class="flowProjectTextWrapper">
         <calcite-panel heading="Project Information" :description="'Last Updated: ' + formatDate(attributes.EditDate)">
 
-            <calcite-action @click="shareProject" icon="copy" scale="m" slot="header-actions-end"></calcite-action>
+            <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action>
             
             <calcite-block v-if="attributes.projectUpdates" icon-start="exclamation-mark-triangle"
             heading="Bi-Weekly Update:" collapsible="">
