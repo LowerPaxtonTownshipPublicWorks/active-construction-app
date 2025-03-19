@@ -6,7 +6,7 @@ import { storeToRefs } from "pinia";
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { theme } = storeToRefs(applicationStore);
+const { themeMode, themeIcon } = storeToRefs(applicationStore);
 const { changeTheme } = applicationStore;
 
 </script>
@@ -14,19 +14,19 @@ const { changeTheme } = applicationStore;
 <template>
 
   <div slot="header-content" id="main-flow-header-wrapper">
-    <calcite-icon scale="l" icon="exclamation-mark-triangle"></calcite-icon>
+    <calcite-icon scale="l" :icon="themeIcon"></calcite-icon>
     <div id="main-flow-header-text-wrapper">
       <p>Construction Projects</p>
       <p>Lower Paxton Township</p>
     </div>
   </div>
   <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action>
-  <calcite-action @click="changeTheme(theme)" slot="header-actions-end" scale="l" :icon="theme == 'dark' ? 'brightness' : 'moon'"></calcite-action>
+  <calcite-action @click="changeTheme(themeMode)" slot="header-actions-end" scale="l" :icon="themeMode == 'dark' ? 'brightness' : 'moon'"></calcite-action>
 </template>
 
-<style>
+<style scoped>
 
-calcite-icon[icon="exclamation-mark-triangle"] {
+calcite-icon {
   --calcite-icon-color: var(--calcite-color-status-warning)
 }
 

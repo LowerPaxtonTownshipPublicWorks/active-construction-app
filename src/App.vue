@@ -10,7 +10,7 @@ const { fetchActiveDetours, fetchUpcomingDetours } = useDetoursStore();
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { projectFlows, isHomeFlowSelected, theme } = storeToRefs(applicationStore);
+const { projectFlows, isHomeFlowSelected, themeMode } = storeToRefs(applicationStore);
 const { clearFlowItems } = applicationStore;
 
 import TabNavigation from '@/components/TabNavigation.vue'
@@ -40,7 +40,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <calcite-shell :class="theme == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
+  <calcite-shell :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
     <calcite-flow>
       <calcite-flow-item :selected="isHomeFlowSelected">
         <FlowNavigation />

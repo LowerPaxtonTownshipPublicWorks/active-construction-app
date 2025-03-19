@@ -2,13 +2,21 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useApplicationStore = defineStore("application", () => {
-  const theme = ref('dark')
+  const themeMode = ref('dark')
+  const themeIcon = ref('exclamation-mark-triangle')
   const projectFlows = ref([]);
   const isHomeFlowSelected = ref(true);
 
   function changeTheme(theme) {
-    if (theme == 'dark') { return this.theme = 'light'}
-    if (theme != 'dark') { return this.theme = 'dark'}
+    if (theme == 'dark') { 
+       this.themeMode = 'light'
+       this.themeIcon = 'exclamation-mark-triangle-f'
+    }
+    if (theme != 'dark') { 
+       this.themeMode = 'dark'
+       this.themeIcon = 'exclamation-mark-triangle'
+    }
+    return theme
   }
 
   function createFlowItem(project) {
@@ -25,7 +33,8 @@ export const useApplicationStore = defineStore("application", () => {
   }
 
   return {
-    theme,
+    themeMode,
+    themeIcon,
     projectFlows,
     isHomeFlowSelected,
     changeTheme,
