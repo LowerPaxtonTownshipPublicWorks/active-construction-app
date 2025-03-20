@@ -23,6 +23,7 @@ const { createFlowItem } = useApplicationStore();
       <p>Projects are sorted by start date (latest first).</p>
     </div> -->
     <calcite-list scale="m">
+      <calcite-list-item-group heading="Active Projects:">
         <calcite-list-item
         v-for="(project, index) in projects"
         :key="index"
@@ -31,15 +32,26 @@ const { createFlowItem } = useApplicationStore();
         @calciteListItemSelect="createFlowItem(project)"
         >
       </calcite-list-item> 
-    </calcite-list>
+    </calcite-list-item-group>
+  </calcite-list>
+  <calcite-list>
+    <calcite-list-item-group heading="Upcoming Projects:">
+
+    </calcite-list-item-group>
+  </calcite-list>
   </calcite-tab>
 </template>
 
 <style scoped>
 
+calcite-tab {
+  padding-inline: 0.125rem;
+}
+
 .sortTextWrapper {
+  
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 0.5rem;
   padding-block-start: 3px;
