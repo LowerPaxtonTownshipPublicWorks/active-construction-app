@@ -1,6 +1,6 @@
 # Vue and ArcGIS Maps JS SDK Core & Map Components + Calcite Components Template
 
-To install dependencies and start the development server, run:
+To install dependencies and start the development server, then run:
 
 ```sh
 npm install
