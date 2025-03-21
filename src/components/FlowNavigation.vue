@@ -26,12 +26,20 @@ const { changeTheme } = applicationStore;
 
 <style scoped>
 
-calcite-icon {
-  --calcite-icon-color: var(--calcite-color-status-warning)
+.calcite-mode-dark calcite-action {
+  --calcite-color-focus: var(--calcite-color-status-warning);
 }
 
-calcite-action {
-  --calcite-color-focus: var(--calcite-color-status-warning);
+.calcite-mode-light calcite-action {
+  --calcite-color-focus: var(--calcite-color-text-2);
+}
+
+.calcite-mode-dark calcite-icon {
+  --calcite-icon-color: var(--calcite-color-status-warning);
+}
+
+.calcite-mode-light calcite-icon {
+  --calcite-icon-color: var(--calcite-color-text-2);
 }
 
 #main-flow-header-wrapper {

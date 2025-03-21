@@ -8,75 +8,75 @@ import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-notice";
 import "@esri/calcite-components/dist/components/calcite-panel";
 
-
 import { useDetoursStore } from "@/stores/detours";
 const detoursStore = useDetoursStore();
-const { detoursActive, detoursUpcoming, isDetoursLoading } = storeToRefs(detoursStore);
+const {
+  detoursActive,
+  detoursUpcoming,
+  getActiveDetoursCount,
+  getUpcomingDetoursCount,
+  isDetoursLoading,
+} = storeToRefs(detoursStore);
+
+import Notice from "./Notice.vue";
 
 import { useApplicationStore } from "@/stores/application";
 const { createFlowItem } = useApplicationStore();
 
 function getDetourLength(shapeLength) {
-  const length = shapeLength * 0.000621371 //Meters to Miles Conversion Factor
-  return length.toFixed(2) + " Miles Closure"
+  const length = shapeLength * 0.000621371; //Meters to Miles Conversion Factor
+  return length.toFixed(2) + " Miles Closure";
 }
 
 function formatDate(attributeDate) {
-    const date = new Date(attributeDate + "T00:00:00")
-    return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const date = new Date(attributeDate + "T00:00:00");
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
-
 </script>
 
 <template>
-  <calcite-tab selected>
+  <calcite-tab>
     <calcite-panel :loading="isDetoursLoading">
       <calcite-list scale="m">
-        <calcite-list-item-group heading="Active Detours:">
-          <calcite-notice v-if="detoursActive.length == 0" open width="full" scale="s" kind="success" icon>
-            <div slot="title">You're all clear — no active detours!</div>
-            <div slot="message">Please check again later!</div>
-          </calcite-notice>
+        <calcite-list-item-group :heading="`Active Detours (${getActiveDetoursCount})`">
+          <Notice v-if="detoursActive.length == 0" msg="You're all clear — no active detours!" />
           <calcite-list-item v-for="detour in detoursActive" :key="detour.attributes.OBJECTID"
-          :label="detour.attributes.detourName"
-          :description="`Ending On ${formatDate(detour.attributes.endDate)} | ${getDetourLength(detour.attributes.Shape__Length)}`"
-          @calciteListItemSelect="createFlowItem(detour)">
-        </calcite-list-item>
-      </calcite-list-item-group>
-    </calcite-list>
-    <calcite-list scale="m">
-      <calcite-list-item-group heading="Upcoming Detours:">
-        <calcite-notice v-if="detoursUpcoming.length == 0" open width="full" scale="s" kind="success" icon>
-          <div slot="title">You're all clear — no detours planned!</div>
-          <div slot="message">Please check again later!</div>
-        </calcite-notice>
-        <calcite-list-item v-for="detour in detoursUpcoming" :key="detour.attributes.OBJECTID" unavailable=""
-        :label="detour.attributes.detourName"
-        :description="`Starting on ${formatDate(detour.attributes.startDate)} | ${getDetourLength(detour.attributes.Shape__Length)}`"
-        @calciteListItemSelect="createFlowItem(detour)">
-      </calcite-list-item>
-    </calcite-list-item-group>
-  </calcite-list>
-</calcite-panel>
+            icon-start="location-sharing-f" :label="detour.attributes.detourName" :description="`Ending On ${formatDate(
+              detour.attributes.endDate
+            )} | ${getDetourLength(detour.attributes.Shape__Length)}`" @calciteListItemSelect="createFlowItem(detour)">
+          </calcite-list-item>
+        </calcite-list-item-group>
+      </calcite-list>
+      <calcite-list scale="m">
+        <calcite-list-item-group :heading="`Upcoming Detours (${getUpcomingDetoursCount})`">
+          <Notice v-if="detoursUpcoming.length == 0" msg="You're all clear — no detours planned!" />
+          <calcite-list-item v-for="detour in detoursUpcoming" :key="detour.attributes.OBJECTID" icon-start="line"
+            unavailable="" :label="detour.attributes.detourName" :description="`Starting on ${formatDate(
+              detour.attributes.startDate
+            )} | ${getDetourLength(detour.attributes.Shape__Length)}`" @calciteListItemSelect="createFlowItem(detour)">
+          </calcite-list-item>
+        </calcite-list-item-group>
+      </calcite-list>
+    </calcite-panel>
   </calcite-tab>
 </template>
 
 <style scoped>
-
 calcite-tab {
   padding-inline: 0.125rem;
 }
 
-
 calcite-panel {
   height: 100%;
-  --calcite-scrim-background: var(--calcite-color-background)
+  --calcite-scrim-background: var(--calcite-color-background);
 }
-
 
 calcite-notice {
   margin-block: 0.5rem;
-  margin-block-end: 0.6rem
+  margin-block-end: 0.6rem;
 }
-
 </style>

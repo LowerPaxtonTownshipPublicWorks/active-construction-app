@@ -31,7 +31,7 @@ export const useProjectsStore = defineStore("projects", () => {
       const outFields = encodeURIComponent("projectDescription, projectName, projectOwner, projectContact, projectContractor, projectStartDate, projectEndDate, projectUpdates, projectAbstract, EditDate")
       const orderByFields = encodeURIComponent("projectStartDate DESC")
       const res = await fetch(
-        `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
+        `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects__PlannedView/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
       );
       const data = await res.json();
       return (projectsUpcoming.value = await data.features);
@@ -42,8 +42,16 @@ export const useProjectsStore = defineStore("projects", () => {
     }
   }
 
-  const getProjectsCount = computed(() => {
+  const getActiveProjectsCount = computed(() => {
     return projectsActive.value.length;
+  });
+
+  const getUpcomingProjectsCount = computed(() => {
+    return projectsUpcoming.value.length;
+  });
+
+  const getTotalProjectsCount = computed(() => {
+    return projectsUpcoming.value.length + projectsActive.value.length;
   });
 
 
@@ -51,7 +59,9 @@ export const useProjectsStore = defineStore("projects", () => {
     projectsActive,
     projectsUpcoming,
     isProjectsLoading,
-    getProjectsCount,
+    getActiveProjectsCount,
+    getUpcomingProjectsCount,
+    getTotalProjectsCount,
     fetchUpcomingProjects,
     fetchProjects,
   };

@@ -40,7 +40,15 @@ export const useDetoursStore = defineStore("detours", () => {
     }
   }
 
-  const getDetoursCount = computed(() => {
+  const getActiveDetoursCount = computed(() => {
+    return detoursActive.value.length;
+  });
+
+  const getUpcomingDetoursCount = computed(() => {
+    return detoursUpcoming.value.length;
+  });
+
+  const getTotalDetoursCount = computed(() => {
     return detoursActive.value.length + detoursUpcoming.value.length;
   });
 
@@ -49,7 +57,9 @@ export const useDetoursStore = defineStore("detours", () => {
     detoursActive,
     detoursUpcoming,
     isDetoursLoading,
-    getDetoursCount,
+    getTotalDetoursCount,
+    getActiveDetoursCount,
+    getUpcomingDetoursCount,
     fetchActiveDetours,
     fetchUpcomingDetours,
   };

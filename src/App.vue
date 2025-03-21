@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 import { useProjectsStore } from "@/stores/projects";
-const { fetchProjects } = useProjectsStore();
+const { fetchProjects, fetchUpcomingProjects } = useProjectsStore();
 
 import { useDetoursStore } from "@/stores/detours";
 const { fetchActiveDetours, fetchUpcomingDetours } = useDetoursStore();
@@ -32,6 +32,7 @@ onMounted(async () => {
     await Promise.all([
       fetchUpcomingDetours(),
       fetchActiveDetours(),
+      fetchUpcomingProjects(),
       fetchProjects()
     ])
   } catch (error) {
@@ -67,9 +68,15 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-calcite-tabs {
+
+.calcite-mode-dark calcite-tabs {
   --calcite-color-brand: var(--calcite-color-status-warning);
   --calcite-color-focus: var(--calcite-color-status-warning);
+}
+
+.calcite-mode-light calcite-tabs {
+  --calcite-color-brand: var(--calcite-color-text-2);
+  --calcite-color-focus: var(--calcite-color-text-2);
 }
 
 .flowContentWrapper {

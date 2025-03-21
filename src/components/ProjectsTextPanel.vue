@@ -9,7 +9,6 @@ import "@esri/calcite-components/dist/components/calcite-block";
 
 
 import { useApplicationStore } from "@/stores/application";
-import { onMounted } from "vue";
 const applicationStore = useApplicationStore();
 const { projectFlows } = storeToRefs(applicationStore);
 
@@ -35,11 +34,12 @@ function formatProjectTimeline(startDate, endDate) {
     <div v-for="{ attributes } in projectFlows" class="flowProjectTextWrapper">
         <calcite-panel heading="Project Information" :description="'Last Updated: ' + formatDate(attributes.EditDate)">
 
-            <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action>
-            
+            <calcite-action @click="shareProject" disabled="" icon="print" scale="m"
+                slot="header-actions-end"></calcite-action>
+
             <calcite-block v-if="attributes.projectUpdates" icon-start="exclamation-mark-triangle"
-            heading="Bi-Weekly Update:" collapsible="">
-            <p v-html="attributes.projectUpdates"></p>
+                heading="Bi-Weekly Update:" collapsible="">
+                <p v-html="attributes.projectUpdates"></p>
             </calcite-block>
 
             <calcite-block icon-start="information" heading="Project Purpose:" collapsible="">
@@ -60,19 +60,29 @@ function formatProjectTimeline(startDate, endDate) {
 </template>
 
 <style scoped>
+
+.calcite-mode-dark calcite-block {
+    --calcite-color-focus: var(--calcite-color-status-warning);
+}
+
+.calcite-mode-light calcite-block {
+    --calcite-color-focus: var(--calcite-color-text-1);
+}
+
+.calcite-mode-dark calcite-block[icon-start="exclamation-mark-triangle"] {
+    --calcite-block-text-color: var(--calcite-color-status-warning);
+    --calcite-block-heading-text-color: var(--calcite-color-status-warning);
+    --calcite-block-heading-text-color-press: var(--calcite-color-status-warning);
+}
+
+.calcite-mode-light calcite-block[icon-start="exclamation-mark-triangle"] {
+    --calcite-block-text-color: var(--calcite-color-text-1);
+    --calcite-block-heading-text-color: var(--calcite-color-text-1);
+    --calcite-block-heading-text-color-press: var(--calcite-color-text-1);
+}
+
+
 .flowProjectTextWrapper {
     height: 65%;
-    display: flex;
-    flex-direction: column;
-
-    & calcite-block {
-        --calcite-color-focus: var(--calcite-color-status-warning);
-    }
-
-    & calcite-block[icon-start="exclamation-mark-triangle"] {
-        --calcite-block-text-color: var(--calcite-color-status-warning);
-        --calcite-block-heading-text-color: var(--calcite-color-status-warning);
-        --calcite-block-heading-text-color-press: var(--calcite-color-status-warning);
-    }
 }
 </style>
