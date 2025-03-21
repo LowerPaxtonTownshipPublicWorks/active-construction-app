@@ -29,11 +29,13 @@ import "@esri/calcite-components/dist/components/calcite-flow-item";
 
 onMounted(async () => {
   try {
-    await fetchProjects();
-    await fetchUpcomingDetours()
-    await fetchActiveDetours();
+    await Promise.all([
+      fetchUpcomingDetours(),
+      fetchActiveDetours(),
+      fetchProjects()
+    ])
   } catch (error) {
-    return console.error(error);
+    console.error(error);
   }
 });
 

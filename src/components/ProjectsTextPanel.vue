@@ -13,6 +13,11 @@ import { onMounted } from "vue";
 const applicationStore = useApplicationStore();
 const { projectFlows } = storeToRefs(applicationStore);
 
+function formatDateDay(attributeDate) {
+    const date = new Date(attributeDate + "T24:00:00Z")
+    return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 function formatDate(attributeDate) {
     const date = new Date(attributeDate)
     return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -20,8 +25,8 @@ function formatDate(attributeDate) {
 
 function formatProjectTimeline(startDate, endDate) {
     if (!startDate) return "TBD";
-    if (endDate) return `${formatDate(startDate)} - ${formatDate(endDate)}`;
-    return `${formatDate(startDate)} - TBD`;
+    if (endDate) return `${formatDateDay(startDate)} - ${formatDateDay(endDate)}`;
+    return `${formatDateDay(startDate)} - TBD`;
 }
 
 </script>
