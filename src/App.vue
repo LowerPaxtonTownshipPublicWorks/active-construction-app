@@ -17,7 +17,7 @@ import TabNavigation from '@/components/TabNavigation.vue'
 import FlowNavigation from '@/components/FlowNavigation.vue'
 import ProjectsTab from '@/components/ProjectsTab.vue'
 import DetoursTab from '@/components/DetoursTab.vue'
-import ProjectsMap from "./components/ProjectsMap.vue";
+import Map from "./components/Map.vue";
 import ProjectsTextPanel from "./components/ProjectsTextPanel.vue";
 import FlowFooter from "./components/FlowFooter.vue";
 
@@ -59,7 +59,7 @@ onMounted(async () => {
         :description="flow.attributes.projectAbstract || 'Detour Flow Subtitle Placeholder'"
         @calciteFlowItemBack="clearFlowItems">
         <div class="flowContentWrapper">
-          <ProjectsMap />
+          <Map />
           <ProjectsTextPanel />
         </div>
       </calcite-flow-item>

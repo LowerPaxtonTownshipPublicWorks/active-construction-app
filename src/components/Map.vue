@@ -17,50 +17,54 @@ import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
 const { projectFlows, themeMode } = storeToRefs(applicationStore);
 
-const mapView = ref(null);
+const arcgisMapComponent = ref(null);
+const activeFlowItem = projectFlows.value[0]
 const isMapLoading = ref(true);
 
 function setupMap () {
-  let handle = reactiveUtils.when(() => !mapView.value.view.updating, () => {
+  let handle = reactiveUtils.when(() => !arcgisMapComponent.value.view.updating, () => {
     toggleLayerViews()
     zoomToFeature()
-    setTimeout(() => isMapLoading.value = false, 400 )
+    setTimeout(() => isMapLoading.value = false, 375 )
     handle.remove()
   });
 }
 
 function toggleLayerViews () {
-  const layerViewsCollection = mapView.value.view.layerViews
-  const featureType = projectFlows.value[0].type
+  const layerViewsCollection = arcgisMapComponent.value.view.layerViews
+  const featureType = activeFlowItem.type
 
   const layerVisibilityMapping = {
-    'project-active': 'Construction Projects [Planned]',
-    'project-upcoming': 'Construction Projects [Active]'
+    'project-active': 'Construction Projects [Active]',
+    'project-upcoming': 'Construction Projects [Planned]',
+    'detour-active': '',
+    'detour-upcoming': ''
   }
 
-  const layerToHide = layerVisibilityMapping[featureType]
+  const layerToShow = layerVisibilityMapping[featureType]
 
   layerViewsCollection.forEach((layerView) => {
-    if (layerView.type == 'group' && layerView.layer.title === layerToHide) {
-      layerView.layer.visible = false
+    layerView.visible = false
+    if (layerView.type == 'group' && layerView.layer.title === layerToShow) {
+      layerView.visible = true
     }
   })
 }
 
 function zoomToFeature() {
   const polygon = new Polygon({
-    rings: projectFlows.value[0].geometry.rings,
+    rings: activeFlowItem.geometry.rings,
     spatialReference: { wkid: 3857 },
   });
 
-  mapView.value.view.goTo({
+  arcgisMapComponent.value.view.goTo({
     target: polygon.extent,
   });
 }
 
 const projectStatusText = computed(() => {
-  if (projectFlows.value[0].type.includes("active")) return "Active"
-  if (projectFlows.value[0].type.includes("upcoming")) return "Planned"
+  if (activeFlowItem.type.includes("active")) return "Active"
+  if (activeFlowItem.type.includes("upcoming")) return "Planned"
 })
 
 
@@ -81,13 +85,13 @@ const projectStatusText = computed(() => {
   </head>
   <calcite-panel :loading="isMapLoading">
     <arcgis-map 
-    ref="mapView" 
+    ref="arcgisMapComponent" 
     item-id="57d6ea3f15164a06b6223986cef38c19"
     @arcgisViewReadyChange="setupMap"
     class="calcite-mode-dark"
      >
       <arcgis-placement position="top-left">
-        <calcite-chip :class="themeMode == 'dark' ? 'dark-chip' : 'calcite-mode-light'" scale="m"  icon="information">{{ projectStatusText }}</calcite-chip>
+        <calcite-chip :class="themeMode == 'dark' ? 'dark-chip' : 'light-chip'" scale="m"  icon="information">{{ projectStatusText }}</calcite-chip>
       </arcgis-placement>
       <arcgis-fullscreen  class="fullscreen calcite-mode-dark" position="top-right" />
     </arcgis-map>
@@ -97,13 +101,13 @@ const projectStatusText = computed(() => {
 <style scoped>
 
 .dark-chip {
-  --calcite-chip-background-color: rgb(36, 36, 36) !important;
+  --calcite-chip-background-color: #242424 !important;
   --calcite-chip-text-color: white !important;
 }
 
 .light-chip {
-  --calcite-chip-background-color: rgb(36, 36, 36) !important;
-  --calcite-chip-text-color: white !important;
+  --calcite-chip-background-color: white !important;
+  --calcite-chip-text-color: #6a6a6a !important;
 }
 
 calcite-panel {
