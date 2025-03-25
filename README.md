@@ -1,4 +1,6 @@
-# Vue and ArcGIS Maps JS SDK Core & Map Components + Calcite Components Template
+# Active & Upcoming Construction Projects App
+## Lower Paxton Township 
+### Public Works Department
 
 To install dependencies and start the development server, then run:
 
