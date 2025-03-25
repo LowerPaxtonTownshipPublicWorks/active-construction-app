@@ -16,7 +16,12 @@ export const useProjectsStore = defineStore("projects", () => {
         `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
       );
       const data = await res.json();
-      return (projectsActive.value = await data.features);
+      return projectsActive.value = await data.features.map((feature) => {
+        return {
+          'type': 'project-active',
+          ...feature
+        }
+      });
     } catch (error) {
       return console.error("Error: ", error);
     } finally {
@@ -34,7 +39,12 @@ export const useProjectsStore = defineStore("projects", () => {
         `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects__PlannedView/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
       );
       const data = await res.json();
-      return (projectsUpcoming.value = await data.features);
+      return projectsUpcoming.value = await data.features.map((feature) => {
+        return {
+          'type': 'project-upcoming',
+          ...feature
+        }
+      });
     } catch (error) {
       return console.error("Error: ", error);
     } finally {

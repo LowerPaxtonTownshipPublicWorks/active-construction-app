@@ -15,7 +15,12 @@ export const useDetoursStore = defineStore("detours", () => {
         `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/0/query?where=${query}&orderByFields=${orderByFields}&outFields=%2A&f=pjson`
       );
       const data = await res.json();
-      return (detoursActive.value = await data.features);
+      return detoursActive.value = await data.features.map((feature) => {
+        return {
+          'type': 'detour-active',
+          ...feature
+        }
+      });
     } catch (error) {
       return console.error("Error: ", error);
     } finally {
@@ -32,7 +37,12 @@ export const useDetoursStore = defineStore("detours", () => {
         `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/0/query?where=${query}&orderByFields=${orderByFields}&outFields=%2A&f=pjson`
       );
       const data = await res.json();
-      return (detoursUpcoming.value = await data.features);
+      return detoursUpcoming.value = await data.features.map((feature) => {
+        return {
+          'type': 'detour-upcoming',
+          ...feature
+        }
+      });
     } catch (error) {
       return console.error("Error: ", error);
     } finally {

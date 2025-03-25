@@ -1,5 +1,4 @@
 @import url('@esri/calcite-components/dist/calcite/calcite.css');
-@import 'https://js.arcgis.com/4.31/@arcgis/core/assets/esri/themes/dark/main.css';
 
 html,
 body,
@@ -9,3 +8,8 @@ body,
     margin: 0;
     padding: 0;
 }
+
+:root calcite-chip {
+    --calcite-chip-background-color: var(--calcite-color-foreground-2) !important;
+    --calcite-chip-text-color: var(--calcite-color-text-2) !important;
+  }

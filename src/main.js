@@ -1,3 +1,4 @@
+import "./assets/esri-theme.css"
 import "./assets/main.css"
 
 import {createPinia} from "pinia";

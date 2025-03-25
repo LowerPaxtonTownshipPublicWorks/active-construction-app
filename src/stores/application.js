@@ -19,9 +19,9 @@ export const useApplicationStore = defineStore("application", () => {
     return theme
   }
 
-  function createFlowItem(project) {
+  function createFlowItem(feature) {
     const flowItem = {
-      ...project,
+      ...feature,
     };
     isHomeFlowSelected.value = false;
     projectFlows.value.push(flowItem);
