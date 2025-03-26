@@ -43,6 +43,14 @@ onMounted(async () => {
 </script>
 
 <template>
+  <head>
+    <link
+    rel="stylesheet"
+    :href="themeMode === 'light' 
+      ? 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css' 
+      : 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/dark/main.css'"
+    />
+  </head>
   <calcite-shell :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
     <calcite-flow>
       <calcite-flow-item :selected="isHomeFlowSelected">
@@ -56,11 +64,11 @@ onMounted(async () => {
       </calcite-flow-item>
       <calcite-flow-item v-for="flow in projectFlows" selected
         :heading="flow.attributes.projectName || flow.attributes.detourName"
-        :description="flow.attributes.projectAbstract || 'Detour Flow Subtitle Placeholder'"
+        :description="flow.attributes.projectAbstract || `Detour Subtitle`"
         @calciteFlowItemBack="clearFlowItems">
         <div class="flowContentWrapper">
           <Map />
-          <ProjectsTextPanel />
+          <ProjectsTextPanel v-if="!flow.type.includes('detour')" />
         </div>
       </calcite-flow-item>
     </calcite-flow>

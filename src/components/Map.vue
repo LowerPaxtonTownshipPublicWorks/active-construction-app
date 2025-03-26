@@ -1,17 +1,20 @@
 <script setup>
-import { computed, ref, } from "vue";
+import { computed, ref, defineProps } from "vue";
 import { storeToRefs } from "pinia";
 
-import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 
 import "@arcgis/map-components/dist/components/arcgis-map";
 import "@arcgis/map-components/components/arcgis-fullscreen";
+import "@arcgis/map-components/components/arcgis-legend";
+import "@arcgis/map-components/components/arcgis-expand";
 import "@arcgis/map-components/components/arcgis-placement";
 import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-chip";
 
 import "@arcgis/core/geometry/Polygon";
 import Polygon from "@arcgis/core/geometry/Polygon";
+import Polyline from "@arcgis/core/geometry/Polyline";
+import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
@@ -19,12 +22,13 @@ const { projectFlows, themeMode } = storeToRefs(applicationStore);
 
 const arcgisMapComponent = ref(null);
 const activeFlowItem = projectFlows.value[0]
+const featureType = activeFlowItem.type
 const isMapLoading = ref(true);
 
 function setupMap () {
   let handle = reactiveUtils.when(() => !arcgisMapComponent.value.view.updating, () => {
     toggleLayerViews()
-    zoomToFeature()
+    zoomToFeature(activeFlowItem)
     setTimeout(() => isMapLoading.value = false, 375 )
     handle.remove()
   });
@@ -32,33 +36,44 @@ function setupMap () {
 
 function toggleLayerViews () {
   const layerViewsCollection = arcgisMapComponent.value.view.layerViews
-  const featureType = activeFlowItem.type
 
   const layerVisibilityMapping = {
     'project-active': 'Construction Projects [Active]',
     'project-upcoming': 'Construction Projects [Planned]',
-    'detour-active': '',
-    'detour-upcoming': ''
+    'detour-active': 'Detour Routes',
+    'detour-upcoming': 'Detour Routes'
   }
 
   const layerToShow = layerVisibilityMapping[featureType]
 
   layerViewsCollection.forEach((layerView) => {
     layerView.visible = false
-    if (layerView.type == 'group' && layerView.layer.title === layerToShow) {
+    if (layerView.layer.title === layerToShow) {
       layerView.visible = true
     }
   })
 }
 
-function zoomToFeature() {
-  const polygon = new Polygon({
-    rings: activeFlowItem.geometry.rings,
-    spatialReference: { wkid: 3857 },
-  });
+function zoomToFeature(feature) {
+
+  let geometry;
+
+  if (featureType.includes('detour')) {
+    geometry = new Polyline({
+      paths: feature.geometry.paths,
+      spatialReference: {wkid: 3857}
+    })
+  }
+
+  if (featureType.includes('project')) {
+    geometry = new Polygon({
+      rings: feature.geometry.rings,
+      spatialReference: { wkid: 3857 },
+    });
+  } 
 
   arcgisMapComponent.value.view.goTo({
-    target: polygon.extent,
+    target: geometry.extent,
   });
 }
 
@@ -71,18 +86,6 @@ const projectStatusText = computed(() => {
 </script>
 
 <template>
-  <head>
-    <link 
-    v-if="themeMode == 'light'" 
-      rel="stylesheet" 
-      href="https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css" 
-    />
-    <link
-    v-else
-      rel="stylesheet" 
-      href="https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/dark/main.css" 
-    />
-  </head>
   <calcite-panel :loading="isMapLoading">
     <arcgis-map 
     ref="arcgisMapComponent" 
@@ -91,52 +94,20 @@ const projectStatusText = computed(() => {
     class="calcite-mode-dark"
      >
       <arcgis-placement position="top-left">
-        <calcite-chip :class="themeMode == 'dark' ? 'dark-chip' : 'light-chip'" scale="m"  icon="information">{{ projectStatusText }}</calcite-chip>
+        <calcite-chip  scale="m"  icon="information">{{ projectStatusText }}</calcite-chip>
       </arcgis-placement>
-      <arcgis-fullscreen  class="fullscreen calcite-mode-dark" position="top-right" />
+      <arcgis-fullscreen v-if="featureType.includes('project')"  position="top-right" />
+      <arcgis-expand v-if="featureType.includes('detour')" label="Map Legend" position="top-right">
+        <arcgis-legend />
+      </arcgis-expand>
     </arcgis-map>
   </calcite-panel>
 </template>
 
 <style scoped>
 
-.dark-chip {
-  --calcite-chip-background-color: #242424 !important;
-  --calcite-chip-text-color: white !important;
-}
-
-.light-chip {
-  --calcite-chip-background-color: white !important;
-  --calcite-chip-text-color: #6a6a6a !important;
-}
-
-calcite-panel {
-  height: 35%;
-  --calcite-scrim-background: var(--calcite-color-background);
-  & arcgis-map {
+arcgis-map {
     height: 100%;
   }
-}
 
-.calcite-mode-dark .fullscreen {
-  --calcite-color-focus: var(--calcite-color-status-warning);
-}
-
-.calcite-mode-light .fullscreen {
-  --calcite-color-focus: var(--calcite-color-text-2);
-}
-
-.calcite-mode-dark calcite-panel {
-  --calcite-loader-progress-color: var(--calcite-color-status-warning);
-  & arcgis-map {
-    --calcite-color-brand: var(--calcite-color-status-warning);
-  }
-}
-
-.calcite-mode-light calcite-panel {
-  --calcite-loader-progress-color: var(--calcite-color-text-2);
-  & arcgis-map {
-    --calcite-color-brand: var(--calcite-color-text-2);
-  }
-}
 </style>

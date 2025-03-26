@@ -1,5 +1,4 @@
 @import url('@esri/calcite-components/dist/calcite/calcite.css');
-@import 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css';
 
 html,
 body,
@@ -10,7 +9,24 @@ body,
     padding: 0;
 }
 
-:root calcite-chip {
-    --calcite-chip-background-color: var(--calcite-color-foreground-2) !important;
-    --calcite-chip-text-color: var(--calcite-color-text-2) !important;
+arcgis-map {
+    --calcite-color-brand: var(--calcite-color-status-warning) !important;
+}
+
+.calcite-mode-dark {
+    --calcite-chip-background-color: #242424 !important;
+    --calcite-chip-text-color: white !important;
+    --calcite-scrim-background: var(--calcite-color-background);
+    --calcite-color-focus: var(--calcite-color-status-warning) !important;
+    --calcite-loader-progress-color: var(--calcite-color-status-warning);
+    --calcite-color-brand: var(--calcite-color-status-warning);
+}
+
+.calcite-mode-light {
+    --calcite-scrim-background: var(--calcite-color-background);
+    --calcite-color-focus: var(--calcite-color-text-2) !important;
+    --calcite-chip-background-color: white !important;
+    --calcite-chip-text-color: #6a6a6a !important;
+    --calcite-loader-progress-color: var(--calcite-color-text-2);
   }
+
