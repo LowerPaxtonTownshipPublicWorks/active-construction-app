@@ -20,27 +20,16 @@ const { changeTheme } = applicationStore;
       <p>Lower Paxton Township</p>
     </div>
   </div>
-  <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action>
+  <!-- <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action> -->
   <calcite-action @click="changeTheme(themeMode)" slot="header-actions-end" scale="l" :icon="themeMode == 'dark' ? 'brightness' : 'moon'"></calcite-action>
 </template>
 
 <style scoped>
 
-.calcite-mode-dark calcite-action {
-  --calcite-color-focus: var(--calcite-color-status-warning);
-}
-
-.calcite-mode-light calcite-action {
-  --calcite-color-focus: var(--calcite-color-text-2);
-}
-
 .calcite-mode-dark calcite-icon {
-  --calcite-icon-color: var(--calcite-color-status-warning);
+    --calcite-icon-color: var(--calcite-color-status-warning);
 }
 
-.calcite-mode-light calcite-icon {
-  --calcite-icon-color: var(--calcite-color-text-2);
-}
 
 #main-flow-header-wrapper {
   display: flex;
@@ -64,4 +53,5 @@ const { changeTheme } = applicationStore;
     font-weight: 500;
   }
 }
+
 </style>

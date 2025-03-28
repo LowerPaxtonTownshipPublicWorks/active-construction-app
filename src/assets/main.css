@@ -11,22 +11,51 @@ body,
 
 arcgis-map {
     --calcite-color-brand: var(--calcite-color-status-warning) !important;
+    height: 100% !important;
+}
+
+calcite-link {
+    --calcite-link-text-color: var(--calcite-color-text-2) !important;
+    --calcite-color-brand-underline: var(--calcite-color-text-2) !important;
 }
 
 .calcite-mode-dark {
-    --calcite-chip-background-color: #242424 !important;
+    --calcite-chip-background-color: #2b2b2b !important;
     --calcite-chip-text-color: white !important;
     --calcite-scrim-background: var(--calcite-color-background);
     --calcite-color-focus: var(--calcite-color-status-warning) !important;
     --calcite-loader-progress-color: var(--calcite-color-status-warning);
     --calcite-color-brand: var(--calcite-color-status-warning);
+
+    calcite-tabs {
+        --calcite-color-brand: var(--calcite-color-status-warning);
+        --calcite-color-focus: var(--calcite-color-status-warning);
+      }
+
+    calcite-action {
+        --calcite-color-focus: var(--calcite-color-status-warning);
+      }
+      
 }
 
 .calcite-mode-light {
     --calcite-scrim-background: var(--calcite-color-background);
     --calcite-color-focus: var(--calcite-color-text-2) !important;
     --calcite-chip-background-color: white !important;
-    --calcite-chip-text-color: #6a6a6a !important;
+    --calcite-chip-text-color: var(--calcite-color-text-2) !important;
     --calcite-loader-progress-color: var(--calcite-color-text-2);
+
+    calcite-tabs {
+        --calcite-color-brand: var(--calcite-color-text-2);
+        --calcite-color-focus: var(--calcite-color-text-2);
+      }
+
+    calcite-action {
+        --calcite-color-focus: var(--calcite-color-text-2);
+      }
+
+    calcite-icon {
+        --calcite-icon-color: var(--calcite-color-text-2);
+      }
   }
 

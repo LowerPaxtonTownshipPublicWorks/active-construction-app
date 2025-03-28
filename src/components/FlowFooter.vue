@@ -30,9 +30,5 @@ import "@esri/calcite-components/dist/components/calcite-link";
         font-weight: 500;
     }
 
-    & calcite-link {
-        --calcite-link-text-color: var(--calcite-color-text-2);
-        --calcite-color-brand-underline: var(--calcite-color-text-2)
-    }
 }
 </style>

@@ -7,32 +7,17 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 
+import { formatDateUnix, formatDateDayOnly, formatProjectTimeline } from "../composables/date.js"
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
 const { projectFlows } = storeToRefs(applicationStore);
 
-function formatDateDayOnly(attributeDate) {
-    const date = new Date(attributeDate + "T24:00:00Z")
-    return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-}
-
-function formatDateUnix(attributeDate) {
-    const date = new Date(attributeDate)
-    return date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-}
-
-function formatProjectTimeline(startDate, endDate) {
-    if (!startDate) return "TBD";
-    if (endDate) return `${formatDateDayOnly(startDate)} - ${formatDateDayOnly(endDate)}`;
-    return `${formatDateDayOnly(startDate)} - TBD`;
-}
-
 </script>
 <template>
     <div v-for="{ attributes, type } in projectFlows" class="flowProjectTextWrapper">
         <calcite-panel heading="Project Information" :description="'Last Updated: ' + formatDateUnix(attributes.EditDate)">
-            <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action>
+            <!-- <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action> -->
             <calcite-block v-if="attributes.projectUpdates && !type.includes('upcoming')" icon-start="exclamation-mark-triangle" heading="Bi-Weekly Update:" collapsible="">
                 <p v-html="attributes.projectUpdates"></p>
             </calcite-block>
@@ -64,4 +49,5 @@ function formatProjectTimeline(startDate, endDate) {
 .flowProjectTextWrapper {
     height: 65%;
 }
+
 </style>

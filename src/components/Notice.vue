@@ -26,5 +26,4 @@ calcite-notice {
   margin-block-end: 0.6rem;
 }
 
-
 </style>
