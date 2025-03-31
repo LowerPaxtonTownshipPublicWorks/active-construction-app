@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+
 
 import { useProjectsStore } from "@/stores/projects";
 const { fetchProjects, fetchUpcomingProjects } = useProjectsStore();
@@ -37,13 +39,13 @@ onMounted(async () => {
       fetchUpcomingProjects(),
       fetchProjects()
     ])
-    console.log(activeBreakpoint)
+
+    console.log(activeBreakpoint.value)
+
   } catch (error) {
     console.error(error);
   }
 });
-
-// import { useBreakpoints } from '@vueuse/core'
 
 const breakpoints = useBreakpoints({
   mobile: 0, // optional
@@ -55,8 +57,6 @@ const breakpoints = useBreakpoints({
 // Can be 'mobile' or 'tablet' or 'laptop' or 'desktop'
 const activeBreakpoint = breakpoints.active()
 
-
-
 </script>
 
 <template>
@@ -66,7 +66,8 @@ const activeBreakpoint = breakpoints.active()
       ? 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css' 
       : 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/dark/main.css'" />
   </head>
-  <calcite-shell :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
+  <div id="appWrapper" :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
+  <calcite-shell>
     <calcite-flow>
       <calcite-flow-item :selected="isHomeFlowSelected">
         <FlowNavigation />
@@ -78,18 +79,34 @@ const activeBreakpoint = breakpoints.active()
         <FlowFooter />
       </calcite-flow-item>
       <calcite-flow-item v-for="flow in projectFlows" selected
-        :heading="flow.attributes.projectName || flow.attributes.detourName || 'Invalid Title'"
-        :description="flow.attributes.projectAbstract || `${formatDetourDescription(flow.type, flow.attributes.startDate, flow.attributes.endDate)}` || 'Invalid Description'" @calciteFlowItemBack="clearFlowItems">
-        <div class="flowContentWrapper">
-          <Map />
-          <ProjectsTextPanel v-if="!flow.type.includes('detour')" />
-        </div>
-      </calcite-flow-item>
-    </calcite-flow>
-  </calcite-shell>
+      :heading="flow.attributes.projectName || flow.attributes.detourName || 'Invalid Title'"
+      :description="flow.attributes.projectAbstract || `${formatDetourDescription(flow.type, flow.attributes.startDate, flow.attributes.endDate)}` || 'Invalid Description'" @calciteFlowItemBack="clearFlowItems">
+      <div class="flowContentWrapper">
+        <Map />
+        <ProjectsTextPanel v-if="!flow.type.includes('detour')" />
+      </div>
+    </calcite-flow-item>
+  </calcite-flow>
+</calcite-shell>
+</div>
 </template>
 
 <style scoped>
+
+#appWrapper {
+  background-color: var(--calcite-color-foreground-2);
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.13' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+calcite-shell {
+  margin-inline: auto;
+  max-width: 1200px;
+}
+/* @media screen and (min-width:1200px ) {
+  #appWrapper {
+    /* padding-block: 10px; */
+  }
+} */
 
 .flowContentWrapper {
   display: flex;

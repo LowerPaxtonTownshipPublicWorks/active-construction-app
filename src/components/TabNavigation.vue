@@ -13,7 +13,7 @@ const { getTotalDetoursCount } = storeToRefs(detoursStore);
 
 </script>
 <template>
- <calcite-tab-nav slot="title-group">
+ <calcite-tab-nav slot="title-group" scale="m">
         <calcite-tab-title >Projects ({{ getTotalProjectsCount }})</calcite-tab-title>
         <calcite-tab-title >Detours ({{ getTotalDetoursCount }})</calcite-tab-title>
       </calcite-tab-nav>

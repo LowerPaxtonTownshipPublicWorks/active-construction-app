@@ -48,7 +48,7 @@ function setProjectIcon(abstractText) {
         </calcite-list-item> 
       </calcite-list-item-group>
     </calcite-list>
-    <calcite-list>
+    <calcite-list scale="m">
       <calcite-list-item-group :heading="`Upcoming Projects (${getUpcomingProjectsCount})`">
         <Notice v-if="projectsUpcoming.length == 0" msg="You're all clear — no projects planned!" />
         <calcite-list-item

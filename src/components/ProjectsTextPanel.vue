@@ -16,7 +16,7 @@ const { projectFlows } = storeToRefs(applicationStore);
 </script>
 <template>
     <div v-for="{ attributes, type } in projectFlows" class="flowProjectTextWrapper">
-        <calcite-panel heading="Project Information" :description="'Last Updated: ' + formatDateUnix(attributes.EditDate)">
+        <calcite-panel scale="m" heading="Project Information" :description="'Last Updated: ' + formatDateUnix(attributes.EditDate)">
             <!-- <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action> -->
             <calcite-block v-if="attributes.projectUpdates && !type.includes('upcoming')" icon-start="exclamation-mark-triangle" heading="Bi-Weekly Update:" collapsible="">
                 <p v-html="attributes.projectUpdates"></p>
