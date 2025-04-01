@@ -21,11 +21,20 @@ const { changeTheme } = applicationStore;
     </div>
   </div>
   <!-- <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action> -->
-  <calcite-action 
+  <calcite-action
+  v-if="activeBreakpoint == 's'" 
   @click="changeTheme(themeMode)" 
-  :text="activeBreakpoint == 's' ? '' : 'Theme'"
+  :icon="themeMode == 'dark' ? 'brightness' : 'moon'"
+  alignment="center"
+  slot="header-actions-end" 
+  scale="l"
+  ></calcite-action>
+  <calcite-action
+  v-if="activeBreakpoint != 's'" 
+  @click="changeTheme(themeMode)" 
   :icon="themeMode == 'dark' ? 'brightness' : 'moon'"
   text-enabled="true"
+  text="Theme"
   alignment="center"
   slot="header-actions-end" 
   scale="l"
