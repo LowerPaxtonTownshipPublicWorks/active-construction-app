@@ -23,6 +23,7 @@ import DetoursTab from '@/components/DetoursTab.vue'
 import Map from "./components/Map.vue";
 import ProjectsTextPanel from "./components/ProjectsTextPanel.vue";
 import FlowFooter from "./components/FlowFooter.vue";
+import WelcomeModal from "./components/WelcomeModal.vue";
 
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-tabs";
@@ -59,6 +60,7 @@ onMounted(async () => {
   </head>
   <div ref="wrapper" id="appWrapper" :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
   <calcite-shell>
+    <WelcomeModal/>
     <calcite-flow >
       <calcite-flow-item :selected="isHomeFlowSelected">
         <FlowNavigation />

@@ -3,8 +3,8 @@ import { ref } from "vue";
 import { useBreakpoints } from '@vueuse/core'
 
 export const useApplicationStore = defineStore("application", () => {
-  const themeMode = ref('dark')
-  const themeIcon = ref('exclamation-mark-triangle')
+  const themeMode = ref('light')
+  const themeIcon = ref('exclamation-mark-triangle-f')
   const projectFlows = ref([]);
   const isHomeFlowSelected = ref(true);
   const activeBreakpoint = ref("");
