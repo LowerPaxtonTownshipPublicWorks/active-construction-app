@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, defineProps } from "vue";
+import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 
 import "@arcgis/map-components/dist/components/arcgis-map";
@@ -17,7 +17,7 @@ import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { projectFlows, themeMode } = storeToRefs(applicationStore);
+const { projectFlows, activeBreakpoint } = storeToRefs(applicationStore);
 
 const arcgisMapComponent = ref(null);
 const isMapLoading = ref(true);
@@ -49,10 +49,18 @@ async function toggleLayerViews() {
   for (const layerView of layerViewsCollection) {
     layerView.visible = false
     if (layerView.layer.title === layerToShow) {
-
       layerView.visible = true
 
-      if (layerToShow.includes('Detour')) {
+      if (layerToShow.includes('Project')) {
+        const groupLayerView = layerView
+        groupLayerView.layerViews.forEach((layerView) => {
+          layerView.filter = new FeatureFilter({
+          where: `projectName = '${activeFlowItem.attributes.projectName}'`,
+        })
+        })
+      }
+
+      else if (layerToShow.includes('Detour')) {
         layerView.filter = new FeatureFilter({
           where: `detourName = '${activeFlowItem.attributes.detourName}'`,
         })
@@ -101,16 +109,23 @@ const projectStatusText = computed(() => {
         <calcite-chip scale="m" icon="information">{{ projectStatusText }}</calcite-chip>
       </arcgis-placement>
       <arcgis-fullscreen v-if="featureType.includes('project')" position="top-right" />
-      <arcgis-expand v-if="featureType.includes('detour')" label="Map Legend" position="top-right">
+      <arcgis-expand v-if="featureType.includes('detour') && activeBreakpoint == 's'" label="Map Legend" position="top-right">
         <arcgis-legend />
       </arcgis-expand>
+      <arcgis-legend v-if="featureType.includes('detour') && activeBreakpoint != 's'" position="top-right" />
     </arcgis-map>
   </calcite-panel>
 </template>
 
 <style scoped>
 
+calcite-panel {
+  height: 100%;
+  flex-grow: 1;
+}
+
 .calcite-mode-dark arcgis-expand arcgis-legend calcite-action calcite-icon {
   --calcite-icon-color: var(--calcite-color-text-3) !important;
     }
+
 </style>

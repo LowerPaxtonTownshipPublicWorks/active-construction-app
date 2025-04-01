@@ -7,21 +7,30 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 
-import { formatDateUnix, formatDateDayOnly, formatProjectTimeline } from "../composables/date.js"
+import { formatDateUnix, formatProjectTimeline } from "../composables/date.js"
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { projectFlows } = storeToRefs(applicationStore);
+const { projectFlows, activeBreakpoint } = storeToRefs(applicationStore);
 
 </script>
 <template>
-    <div v-for="{ attributes, type } in projectFlows" class="flowProjectTextWrapper">
+    <div v-for="{ attributes, type } in projectFlows" class="flowProjectTextWrapper" :class="activeBreakpoint == 's' ? 's' : 'm-l'">
         <calcite-panel scale="m" heading="Project Information" :description="'Last Updated: ' + formatDateUnix(attributes.EditDate)">
             <!-- <calcite-action @click="shareProject" disabled="" icon="print" scale="m" slot="header-actions-end"></calcite-action> -->
-            <calcite-block v-if="attributes.projectUpdates && !type.includes('upcoming')" icon-start="exclamation-mark-triangle" heading="Bi-Weekly Update:" collapsible="">
+            <calcite-block 
+            v-if="attributes.projectUpdates && !type.includes('upcoming')"
+            icon-start="exclamation-mark-triangle" 
+            heading="Bi-Weekly Update:"
+            :open="activeBreakpoint != 's' ? true : false" 
+            collapsible="">
                 <p v-html="attributes.projectUpdates"></p>
             </calcite-block>
-            <calcite-block icon-start="information" heading="Project Purpose:" collapsible="">
+            <calcite-block 
+            icon-start="information" 
+            heading="Project Purpose:" 
+            :open="activeBreakpoint != 's' ? true : false" 
+            collapsible="">
                 <p v-html="attributes.projectDescription"></p>
             </calcite-block>
             <calcite-block icon-start="date-time" heading="Estimated Project Timeframe:" :description="formatProjectTimeline(attributes.projectStartDate, attributes.projectEndDate)"></calcite-block>
@@ -46,8 +55,22 @@ const { projectFlows } = storeToRefs(applicationStore);
     --calcite-block-heading-text-color-press: var(--calcite-color-text-1);
 }
 
+calcite-panel {
+    --calcite-panel-space: 5px
+}
+
 .flowProjectTextWrapper {
-    height: 65%;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.s {
+  height: 65%;
+  max-height: 409px;
+}
+
+.m-l {
+    height: 100%;
 }
 
 </style>

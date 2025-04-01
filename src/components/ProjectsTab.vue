@@ -14,6 +14,8 @@ const projectsStore = useProjectsStore();
 const { projectsActive, projectsUpcoming, getActiveProjectsCount, getUpcomingProjectsCount, isProjectsLoading} = storeToRefs(projectsStore);
 
 import { useApplicationStore } from "@/stores/application";
+const applicationStore = useApplicationStore();
+const { activeBreakpoint } = storeToRefs(applicationStore);
 const { createFlowItem } = useApplicationStore();
 
 function setProjectIcon(abstractText) {
@@ -34,7 +36,7 @@ function setProjectIcon(abstractText) {
 <template>
   <calcite-tab selected>
     <calcite-panel :loading="isProjectsLoading">
-      <calcite-list scale="m">
+      <calcite-list :scale="activeBreakpoint == 'l' ? 'l' : 'm'">
         <calcite-list-item-group :heading="`Active Projects (${getActiveProjectsCount})`">
           <Notice v-if="projectsActive.length == 0" msg="You're all clear — no active projects!" />
           <calcite-list-item
@@ -48,7 +50,7 @@ function setProjectIcon(abstractText) {
         </calcite-list-item> 
       </calcite-list-item-group>
     </calcite-list>
-    <calcite-list scale="m">
+    <calcite-list :scale="activeBreakpoint == 'l' ? 'l' : 'm'">
       <calcite-list-item-group :heading="`Upcoming Projects (${getUpcomingProjectsCount})`">
         <Notice v-if="projectsUpcoming.length == 0" msg="You're all clear — no projects planned!" />
         <calcite-list-item

@@ -1,11 +1,23 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useBreakpoints } from '@vueuse/core'
 
 export const useApplicationStore = defineStore("application", () => {
   const themeMode = ref('dark')
   const themeIcon = ref('exclamation-mark-triangle')
   const projectFlows = ref([]);
   const isHomeFlowSelected = ref(true);
+  const activeBreakpoint = ref("");
+
+  
+  function updateBreakpoint() {
+    const breakpoints = useBreakpoints({
+      s: 0,
+      m: 600,
+      l: 1200,
+    })
+    activeBreakpoint.value = breakpoints.active().value;
+  }
 
   function changeTheme(theme) {
     if (theme == 'dark') { 
@@ -37,6 +49,8 @@ export const useApplicationStore = defineStore("application", () => {
     themeIcon,
     projectFlows,
     isHomeFlowSelected,
+    activeBreakpoint,
+    updateBreakpoint,
     changeTheme,
     createFlowItem,
     clearFlowItems,

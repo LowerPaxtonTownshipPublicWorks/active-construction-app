@@ -1,8 +1,7 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-
+import { useResizeObserver } from '@vueuse/core'
 
 import { useProjectsStore } from "@/stores/projects";
 const { fetchProjects, fetchUpcomingProjects } = useProjectsStore();
@@ -12,8 +11,8 @@ const { fetchActiveDetours, fetchUpcomingDetours } = useDetoursStore();
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { projectFlows, isHomeFlowSelected, themeMode } = storeToRefs(applicationStore);
-const { clearFlowItems } = applicationStore;
+const { projectFlows, isHomeFlowSelected, themeMode, activeBreakpoint } = storeToRefs(applicationStore);
+const { clearFlowItems, updateBreakpoint } = applicationStore;
 
 import { formatDetourDescription } from "./composables/date.js"
 
@@ -30,6 +29,10 @@ import "@esri/calcite-components/dist/components/calcite-tabs";
 import "@esri/calcite-components/dist/components/calcite-flow";
 import "@esri/calcite-components/dist/components/calcite-flow-item";
 
+const wrapper = ref(null)
+useResizeObserver(wrapper, () => {
+  updateBreakpoint()
+})
 
 onMounted(async () => {
   try {
@@ -39,23 +42,11 @@ onMounted(async () => {
       fetchUpcomingProjects(),
       fetchProjects()
     ])
-
-    console.log(activeBreakpoint.value)
-
   } catch (error) {
     console.error(error);
   }
 });
 
-const breakpoints = useBreakpoints({
-  mobile: 0, // optional
-  tablet: 640,
-  laptop: 1024,
-  desktop: 1280,
-})
-
-// Can be 'mobile' or 'tablet' or 'laptop' or 'desktop'
-const activeBreakpoint = breakpoints.active()
 
 </script>
 
@@ -66,9 +57,9 @@ const activeBreakpoint = breakpoints.active()
       ? 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css' 
       : 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/dark/main.css'" />
   </head>
-  <div id="appWrapper" :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
+  <div ref="wrapper" id="appWrapper" :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
   <calcite-shell>
-    <calcite-flow>
+    <calcite-flow >
       <calcite-flow-item :selected="isHomeFlowSelected">
         <FlowNavigation />
         <calcite-tabs layout="center">
@@ -81,7 +72,7 @@ const activeBreakpoint = breakpoints.active()
       <calcite-flow-item v-for="flow in projectFlows" selected
       :heading="flow.attributes.projectName || flow.attributes.detourName || 'Invalid Title'"
       :description="flow.attributes.projectAbstract || `${formatDetourDescription(flow.type, flow.attributes.startDate, flow.attributes.endDate)}` || 'Invalid Description'" @calciteFlowItemBack="clearFlowItems">
-      <div class="flowContentWrapper">
+      <div class="flowContentWrapper" :class="activeBreakpoint == 's' ? 's' : 'm-l'">
         <Map />
         <ProjectsTextPanel v-if="!flow.type.includes('detour')" />
       </div>
@@ -98,20 +89,18 @@ const activeBreakpoint = breakpoints.active()
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.13' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-calcite-shell {
-  margin-inline: auto;
-  max-width: 1200px;
-}
-/* @media screen and (min-width:1200px ) {
-  #appWrapper {
-    /* padding-block: 10px; */
-  }
-} */
-
 .flowContentWrapper {
+  height: 100%;
+}
+
+.s {
   display: flex;
   flex-direction: column;
-  height: 100%;
+}
+
+.m-l {
+  display: flex;
+  flex-direction: row;
 }
 
 </style>

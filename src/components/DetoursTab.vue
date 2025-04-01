@@ -22,6 +22,8 @@ const {
 } = storeToRefs(detoursStore);
 
 import { useApplicationStore } from "@/stores/application";
+const applicationStore = useApplicationStore();
+const { activeBreakpoint } = storeToRefs(applicationStore);
 const { createFlowItem } = useApplicationStore();
 
 function getDetourLength(shapeLength) {
@@ -34,7 +36,7 @@ function getDetourLength(shapeLength) {
 <template>
   <calcite-tab>
     <calcite-panel :loading="isDetoursLoading">
-      <calcite-list scale="m">
+      <calcite-list :scale="activeBreakpoint == 'l' ? 'l' : 'm'">
         <calcite-list-item-group :heading="`Active Detours (${getActiveDetoursCount})`">
           <Notice v-if="detoursActive.length == 0" msg="You're all clear — no active detours!" />
           <calcite-list-item v-for="detour in detoursActive" :key="detour.attributes.OBJECTID"
@@ -42,7 +44,7 @@ function getDetourLength(shapeLength) {
           </calcite-list-item>
         </calcite-list-item-group>
       </calcite-list>
-      <calcite-list scale="m">
+      <calcite-list :scale="activeBreakpoint == 'l' ? 'l' : 'm'">
         <calcite-list-item-group :heading="`Upcoming Detours (${getUpcomingDetoursCount})`">
           <Notice v-if="detoursUpcoming.length == 0" msg="You're all clear — no detours planned!" />
           <calcite-list-item v-for="detour in detoursUpcoming" :key="detour.attributes.OBJECTID" icon-start="road-sign"

@@ -6,7 +6,7 @@ import { storeToRefs } from "pinia";
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { themeMode, themeIcon } = storeToRefs(applicationStore);
+const { themeMode, themeIcon, activeBreakpoint } = storeToRefs(applicationStore);
 const { changeTheme } = applicationStore;
 
 </script>
@@ -21,7 +21,15 @@ const { changeTheme } = applicationStore;
     </div>
   </div>
   <!-- <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action> -->
-  <calcite-action @click="changeTheme(themeMode)" slot="header-actions-end" scale="l" :icon="themeMode == 'dark' ? 'brightness' : 'moon'"></calcite-action>
+  <calcite-action 
+  @click="changeTheme(themeMode)" 
+  :text="activeBreakpoint == 's' ? '' : 'Theme'"
+  :icon="themeMode == 'dark' ? 'brightness' : 'moon'"
+  text-enabled="true"
+  alignment="center"
+  slot="header-actions-end" 
+  scale="l"
+  ></calcite-action>
 </template>
 
 <style scoped>
