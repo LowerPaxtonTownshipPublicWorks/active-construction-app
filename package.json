@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "NODE_OPTIONS=--max_old_space_size=8192 npm run build",
+    "build": "NODE_OPTIONS=--max_old_space_size=8192 vite build",
     "preview": "vite preview",
     "postinstall": "npm run copy",
     "copy": "ncp ./node_modules/@esri/calcite-components/dist/calcite/assets/ ./public/assets/"
