@@ -18,7 +18,7 @@ function closeModal () {
 <calcite-dialog ref="modal" open outside-close-disabled close-disabled modal slot="dialogs">
     <div id="modalWrapper">
         <img src="../assets/lptLogo.png">
-        <h2> to the Construction & Detours App!</h2>
+        <h2>Welcome to the Construction & Detours App!</h2>
         <h3>Stay informed and navigate with ease.</h3>
         <p>This app provides real-time updates on local construction projects and detours throughout Lower Paxton Township, helping you plan your travels efficiently and avoid delays. Whether you're driving through or simply curious, we've got the latest information to keep you informed. Thank you for using our app!</p>
     </div>
