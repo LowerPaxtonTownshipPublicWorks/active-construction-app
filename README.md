@@ -1,6 +1,13 @@
-# Active & Upcoming Construction Projects App
-## Lower Paxton Township 
-### Public Works Department
+# Construction & Detours App
+## Lower Paxton Township | Public Works Department
+#### All Code Developed by Ben Beattie (GIS Analyst Intern) Spring 2025
+
+<img src="./src/assets/markdownThumbnail.png"/>
+
+<br>
+The tech stack used for this is VueJS with ArcGIS Maps SDK For JavaScript & the Calcite Design System.
+<br>
+<br>
 
 To install dependencies and start the development server, then run:
 
@@ -9,10 +16,10 @@ npm install
 npm run dev
 ```
 
-## Recommended IDE setup
+To commit changes to live website, run:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+```sh
+git add .
+git commit -m "commit message text"
+git push origin main
+```
