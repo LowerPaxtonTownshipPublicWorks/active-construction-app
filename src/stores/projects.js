@@ -9,7 +9,7 @@ export const useProjectsStore = defineStore("projects", () => {
   async function fetchProjects() {
     try {
       isProjectsLoading.value = true;
-      const query = encodeURIComponent("1=1");
+      const query = encodeURIComponent("projectStatus = 'Active'");
       const outFields = encodeURIComponent("projectDescription, projectName, projectOwner, projectContact, projectContractor, projectStartDate, projectEndDate, projectUpdates, projectAbstract, EditDate")
       const orderByFields = encodeURIComponent("projectStartDate DESC")
       const res = await fetch(
@@ -32,11 +32,11 @@ export const useProjectsStore = defineStore("projects", () => {
   async function fetchUpcomingProjects() {
     try {
       isProjectsLoading.value = true;
-      const query = encodeURIComponent("1=1");
+      const query = encodeURIComponent("projectStatus = 'Planned'");
       const outFields = encodeURIComponent("projectDescription, projectName, projectOwner, projectContact, projectContractor, projectStartDate, projectEndDate, projectUpdates, projectAbstract, EditDate")
       const orderByFields = encodeURIComponent("projectStartDate DESC")
       const res = await fetch(
-        `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects__PlannedView/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
+        `https://services7.arcgis.com/whIrgO50Zo8ls2B1/arcgis/rest/services/Construction_Projects_ACTIVE_VIEW/FeatureServer/2/query?where=${query}&outFields=${outFields}&orderByFields=${orderByFields}&f=pjson`
       );
       const data = await res.json();
       return projectsUpcoming.value = await data.features.map((feature) => {

@@ -10,11 +10,6 @@ body,
     padding: 0;
 }
 
-arcgis-map {
-    --calcite-color-brand: var(--calcite-color-status-warning) !important;
-    height: 100% !important;
-}
-
 calcite-link {
     --calcite-link-text-color: var(--calcite-color-text-2) !important;
     --calcite-color-brand-underline: var(--calcite-color-text-2) !important;
@@ -22,6 +17,10 @@ calcite-link {
 
 .calcite-mode-dark {
 
+  & arcgis-map {
+    --calcite-color-brand: var(--calcite-color-status-warning) !important;
+    height: 100% !important;
+  }
 
     --calcite-chip-background-color: #2b2b2b !important;
     --calcite-chip-text-color: white !important;
@@ -42,6 +41,12 @@ calcite-link {
 }
 
 .calcite-mode-light {
+
+  & arcgis-map {
+    --calcite-color-brand: var(--calcite-color-text-3) !important;
+    height: 100% !important;
+  }
+
     --calcite-scrim-background: var(--calcite-color-background);
     --calcite-color-focus: var(--calcite-color-text-2) !important;
     --calcite-chip-background-color: white !important;

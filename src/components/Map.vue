@@ -62,11 +62,11 @@ async function toggleLayerViews() {
 
       else if (layerToShow.includes('Detour')) {
         layerView.filter = new FeatureFilter({
-          where: `detourName = '${activeFlowItem.attributes.detourName}'`,
+          where: `detourSharedID = '${activeFlowItem.attributes.detourSharedID}'`,
         })
 
         const query = new Query({
-          where: `detourName = '${activeFlowItem.attributes.detourName}'`
+          where: `detourSharedID = '${activeFlowItem.attributes.detourSharedID}'`
         });
 
         detourExtent = await layerView.layer.queryExtent(query);
