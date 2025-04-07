@@ -6,15 +6,16 @@ import { storeToRefs } from "pinia";
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { themeMode, themeIcon, activeBreakpoint } = storeToRefs(applicationStore);
+const { theme, activeBreakpoint } = storeToRefs(applicationStore);
 const { changeTheme } = applicationStore;
+
 
 </script>
 
 <template>
 
   <div slot="header-content" id="main-flow-header-wrapper">
-    <calcite-icon scale="l" :icon="themeIcon"></calcite-icon>
+    <calcite-icon scale="l" :icon="theme.icon"></calcite-icon>
     <div id="main-flow-header-text-wrapper">
       <p>Construction Projects</p>
       <p>Lower Paxton Township</p>
@@ -23,16 +24,16 @@ const { changeTheme } = applicationStore;
   <!-- <calcite-action disabled="" slot="header-actions-end" scale="l" icon="map"></calcite-action> -->
   <calcite-action
   v-if="activeBreakpoint == 's'" 
-  @click="changeTheme(themeMode)" 
-  :icon="themeMode == 'dark' ? 'brightness' : 'moon'"
+  @click="changeTheme(theme.mode)" 
+  :icon="theme.mode == 'dark' ? 'brightness' : 'moon'"
   alignment="center"
   slot="header-actions-end" 
   scale="l"
   ></calcite-action>
   <calcite-action
   v-if="activeBreakpoint != 's'" 
-  @click="changeTheme(themeMode)" 
-  :icon="themeMode == 'dark' ? 'brightness' : 'moon'"
+  @click="changeTheme(theme.mode)" 
+  :icon="theme.mode == 'dark' ? 'brightness' : 'moon'"
   text-enabled="true"
   text="Theme"
   alignment="center"

@@ -11,7 +11,7 @@ const { fetchActiveDetours, fetchUpcomingDetours } = useDetoursStore();
 
 import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
-const { projectFlows, isHomeFlowSelected, themeMode, activeBreakpoint } = storeToRefs(applicationStore);
+const { projectFlows, isHomeFlowSelected, theme, activeBreakpoint } = storeToRefs(applicationStore);
 const { clearFlowItems, updateBreakpoint } = applicationStore;
 
 import { formatDetourDescription } from "./composables/date.js"
@@ -29,6 +29,7 @@ import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import "@esri/calcite-components/dist/components/calcite-flow";
 import "@esri/calcite-components/dist/components/calcite-flow-item";
+
 
 const wrapper = ref(null)
 useResizeObserver(wrapper, () => {
@@ -54,11 +55,11 @@ onMounted(async () => {
 <template>
 
   <head>
-    <link rel="stylesheet" :href="themeMode === 'light' 
+    <link rel="stylesheet" :href="theme.mode === 'light' 
       ? 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/light/main.css' 
       : 'https://js.arcgis.com/4.32/@arcgis/core/assets/esri/themes/dark/main.css'" />
   </head>
-  <div ref="wrapper" id="appWrapper" :class="themeMode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
+  <div ref="wrapper" id="appWrapper" :class="theme.mode == 'dark' ? 'calcite-mode-dark' : 'calcite-mode-light'">
   <calcite-shell>
     <WelcomeModal/>
     <calcite-flow >

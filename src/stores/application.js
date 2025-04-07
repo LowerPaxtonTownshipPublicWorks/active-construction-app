@@ -1,14 +1,13 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useBreakpoints } from '@vueuse/core'
+import { useStorage } from "@vueuse/core";
 
 export const useApplicationStore = defineStore("application", () => {
-  const themeMode = ref('light')
-  const themeIcon = ref('exclamation-mark-triangle-f')
+  const theme = useStorage('theme', {'mode' : 'dark', 'icon': 'exclamation-mark-triangle'})
   const projectFlows = ref([]);
   const isHomeFlowSelected = ref(true);
   const activeBreakpoint = ref("");
-
   
   function updateBreakpoint() {
     const breakpoints = useBreakpoints({
@@ -19,16 +18,15 @@ export const useApplicationStore = defineStore("application", () => {
     activeBreakpoint.value = breakpoints.active().value;
   }
 
-  function changeTheme(theme) {
-    if (theme == 'dark') { 
-       this.themeMode = 'light'
-       this.themeIcon = 'exclamation-mark-triangle-f'
+  function changeTheme(mode) {
+    if (mode == 'dark') {
+      theme.value.mode = 'light'
+      theme.value.icon = 'exclamation-mark-triangle-f'
     }
-    if (theme != 'dark') { 
-       this.themeMode = 'dark'
-       this.themeIcon = 'exclamation-mark-triangle'
+    if (mode != 'dark') {
+      theme.value.mode = 'dark'
+      theme.value.icon = 'exclamation-mark-triangle' 
     }
-    return theme
   }
 
   function createFlowItem(feature) {
@@ -50,8 +48,7 @@ export const useApplicationStore = defineStore("application", () => {
   }
 
   return {
-    themeMode,
-    themeIcon,
+    theme,
     projectFlows,
     isHomeFlowSelected,
     activeBreakpoint,

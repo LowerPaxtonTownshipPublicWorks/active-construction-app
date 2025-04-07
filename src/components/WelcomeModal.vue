@@ -67,7 +67,6 @@ function closeModal () {
     & p {
         font-size: clamp(1rem, 2.5vw, 1.05rem);
     }
-
 }
 
 </style>
