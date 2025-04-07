@@ -39,9 +39,14 @@ export const useApplicationStore = defineStore("application", () => {
     projectFlows.value.push(flowItem);
   }
 
-  function clearFlowItems() {
-    projectFlows.value = [];
-    isHomeFlowSelected.value = true;
+  function clearFlowItems(e) {
+    if (e.target.id == 'appFlow') {
+      console.log(e);
+      projectFlows.value = [];
+      isHomeFlowSelected.value = true;
+    } else {
+      return
+    }
   }
 
   return {

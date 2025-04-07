@@ -71,7 +71,7 @@ onMounted(async () => {
         </calcite-tabs>
         <FlowFooter />
       </calcite-flow-item>
-      <calcite-flow-item v-for="flow in projectFlows" selected
+      <calcite-flow-item v-for="flow in projectFlows" selected id="appFlow"
       :heading="flow.attributes.projectName || flow.attributes.detourName || 'Invalid Title'"
       :description="flow.attributes.projectAbstract || `${formatDetourDescription(flow.type, flow.attributes.startDate, flow.attributes.endDate)}` || 'Invalid Description'" @calciteFlowItemBack="clearFlowItems">
       <div class="flowContentWrapper" :class="activeBreakpoint == 's' ? 's' : 'm-l'">
