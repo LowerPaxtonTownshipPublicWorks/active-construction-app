@@ -17,53 +17,56 @@ calcite-link {
 
 .calcite-mode-dark {
 
+  --calcite-chip-background-color: #2b2b2b !important;
+  --calcite-chip-text-color: white !important;
+  --calcite-scrim-background: var(--calcite-color-background);
+  --calcite-color-focus: var(--calcite-color-status-warning) !important;
+  --calcite-loader-progress-color: var(--calcite-color-status-warning);
+  --calcite-color-brand: var(--calcite-color-status-warning);
+
   & arcgis-map {
     --calcite-color-brand: var(--calcite-color-status-warning) !important;
     height: 100% !important;
   }
 
-    --calcite-chip-background-color: #2b2b2b !important;
-    --calcite-chip-text-color: white !important;
-    --calcite-scrim-background: var(--calcite-color-background);
-    --calcite-color-focus: var(--calcite-color-status-warning) !important;
-    --calcite-loader-progress-color: var(--calcite-color-status-warning);
+  & calcite-tabs {
     --calcite-color-brand: var(--calcite-color-status-warning);
+    --calcite-color-focus: var(--calcite-color-status-warning);
+  }
 
-    calcite-tabs {
-        --calcite-color-brand: var(--calcite-color-status-warning);
-        --calcite-color-focus: var(--calcite-color-status-warning);
-      }
+  & calcite-action {
+    --calcite-color-focus: var(--calcite-color-status-warning);
+  }
 
-    calcite-action {
-        --calcite-color-focus: var(--calcite-color-status-warning);
-      }
-      
+  & calcite-button {
+    --calcite-color-focus: white !important;
+  }
+
 }
 
 .calcite-mode-light {
+
+  --calcite-scrim-background: var(--calcite-color-background);
+  --calcite-color-focus: var(--calcite-color-text-2) !important;
+  --calcite-chip-background-color: white !important;
+  --calcite-chip-text-color: var(--calcite-color-text-2) !important;
+  --calcite-loader-progress-color: var(--calcite-color-text-2);
 
   & arcgis-map {
     --calcite-color-brand: var(--calcite-color-text-3) !important;
     height: 100% !important;
   }
 
-    --calcite-scrim-background: var(--calcite-color-background);
-    --calcite-color-focus: var(--calcite-color-text-2) !important;
-    --calcite-chip-background-color: white !important;
-    --calcite-chip-text-color: var(--calcite-color-text-2) !important;
-    --calcite-loader-progress-color: var(--calcite-color-text-2);
-
-    calcite-tabs {
-        --calcite-color-brand: var(--calcite-color-text-2);
-        --calcite-color-focus: var(--calcite-color-text-2);
-      }
-
-    calcite-action {
-        --calcite-color-focus: var(--calcite-color-text-2);
-      }
-
-    calcite-icon {
-        --calcite-icon-color: var(--calcite-color-text-2);
-      }
+  calcite-tabs {
+    --calcite-color-brand: var(--calcite-color-text-2);
+    --calcite-color-focus: var(--calcite-color-text-2);
   }
 
+  calcite-action {
+    --calcite-color-focus: var(--calcite-color-text-2);
+  }
+
+  calcite-icon {
+    --calcite-icon-color: var(--calcite-color-text-2);
+  }
+}
