@@ -22,7 +22,7 @@ import { useApplicationStore } from "@/stores/application";
 const applicationStore = useApplicationStore();
 const { projectFlows, activeBreakpoint } = storeToRefs(applicationStore);
 
-const arcgisMapComponent = ref(null);
+const arcgisMapComponent = ref("");
 const arcgisPrintComponent = ref(null);
 const isMapLoading = ref(true);
 
