@@ -146,7 +146,7 @@ function hideMapPrintArea () {
         <arcgis-legend />
       </arcgis-expand>
       <arcgis-legend v-if="featureType.includes('detour') && activeBreakpoint != 's'" position="top-right" />
-      <arcgis-expand v-if="featureType.includes('detour')" position="bottom-right">
+      <arcgis-expand v-if="featureType.includes('detour')" label="Print Map Configuration" position="bottom-right">
         <arcgis-print 
         @arcgisPropertyChange = "setupPrint"
         @arcgisSubmit = "hideMapPrintArea"

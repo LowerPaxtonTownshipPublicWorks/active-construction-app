@@ -52,7 +52,7 @@ function closeModal () {
     }
 
     & h2 {
-        font-size: clamp(1.46rem, 2.5vw, 2rem);
+        font-size: clamp(1.42rem, 2.5vw, 2rem);
         font-weight: bolder;
         margin-bottom: 0.5rem;
     }
