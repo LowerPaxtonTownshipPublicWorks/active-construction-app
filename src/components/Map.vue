@@ -123,6 +123,12 @@ function setupPrint( { target: printElementEvent } ) {
   }
 }
 
+function hideMapPrintArea () {
+  console.log('submit');
+  let printWidget = arcgisPrintComponent.value
+  printWidget.showPrintAreaEnabled = false
+}
+
 </script>
 
 <template>
@@ -143,6 +149,7 @@ function setupPrint( { target: printElementEvent } ) {
       <arcgis-expand v-if="featureType.includes('detour')" position="bottom-right">
         <arcgis-print 
         @arcgisPropertyChange = "setupPrint"
+        @arcgisSubmit = "hideMapPrintArea"
         allowed-layouts="letter-ansi-a-portrait"
         allowed-formats="pdf"
         ref="arcgisPrintComponent"></arcgis-print>
