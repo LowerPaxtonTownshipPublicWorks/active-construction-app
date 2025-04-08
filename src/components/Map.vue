@@ -119,7 +119,7 @@ function setupPrint( { target: printElementEvent } ) {
     setTimeout(() => {
       let mapTab = printWidget.childElem.querySelector(".esri-print__layout-tab[data-tab-id='mapOnlyTab']")
       mapTab.style.display = 'none'
-    }, 500)
+    }, 600)
   }
 }
 
@@ -142,18 +142,19 @@ function hideMapPrintArea () {
         <calcite-chip scale="m" icon="information">{{ projectStatusText }}</calcite-chip>
       </arcgis-placement>
       <arcgis-fullscreen v-if="featureType.includes('project')" position="top-right" />
-      <arcgis-expand v-if="featureType.includes('detour') && activeBreakpoint == 's'" label="Map Legend" position="top-right">
-        <arcgis-legend />
-      </arcgis-expand>
       <arcgis-legend v-if="featureType.includes('detour') && activeBreakpoint != 's'" position="top-right" />
-      <arcgis-expand v-if="featureType.includes('detour')" label="Print Map Configuration" position="bottom-right">
-        <arcgis-print 
-        @arcgisPropertyChange = "setupPrint"
-        @arcgisSubmit = "hideMapPrintArea"
-        allowed-layouts="letter-ansi-a-portrait"
-        allowed-formats="pdf"
-        ref="arcgisPrintComponent"></arcgis-print>
-      </arcgis-expand>
+      <arcgis-expand v-if="featureType.includes('detour')" label="Print Map Configuration" 
+      :position="activeBreakpoint == 's' ? 'top-right' : 'bottom-right'">
+      <arcgis-print 
+      @arcgisPropertyChange = "setupPrint"
+      @arcgisSubmit = "hideMapPrintArea"
+      allowed-layouts="letter-ansi-a-portrait"
+      allowed-formats="pdf"
+      ref="arcgisPrintComponent"></arcgis-print>
+    </arcgis-expand>
+    <arcgis-expand v-if="featureType.includes('detour') && activeBreakpoint == 's'" label="Map Legend" position="top-right">
+      <arcgis-legend />
+    </arcgis-expand>
     </arcgis-map>
   </calcite-panel>
 </template>
