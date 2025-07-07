@@ -31,7 +31,7 @@ const { projectFlows, activeBreakpoint } = storeToRefs(applicationStore);
             heading="Project Purpose:" 
             :open="activeBreakpoint != 's' ? true : false" 
             collapsible="">
-                <p v-html="projectDescriptionText">{{ attributes.projectDescription }}</p>
+                <p v-html="attributes.projectDescription"></p>
             </calcite-block>
             <calcite-block icon-start="date-time" heading="Estimated Project Timeframe:" :description="formatProjectTimeline(attributes.projectStartDate, attributes.projectEndDate)"></calcite-block>
             <calcite-block icon-start="user" heading="Project Owner:" :description="attributes.projectOwner"></calcite-block>
